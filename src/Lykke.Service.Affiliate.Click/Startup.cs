@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -7,12 +6,10 @@ using AzureStorage.Tables;
 using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
-using Lykke.JobTriggers.Triggers;
 using Lykke.Logs;
 using Lykke.Service.Affiliate.Core.Services;
 using Lykke.Service.Affiliate.Settings;
 using Lykke.Service.Affiliate.Modules;
-using Lykke.Service.Affiliate.RabbitSubscribers;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
 using Microsoft.AspNetCore.Builder;
@@ -29,15 +26,6 @@ namespace Lykke.Service.Affiliate
         public IContainer ApplicationContainer { get; private set; }
         public IConfigurationRoot Configuration { get; }
         public ILog Log { get; private set; }
-        private TriggerHost _triggerHost;
-        private Task _triggerHostTask;
-
-        private readonly IEnumerable<Type> _subscribers = new List<Type>
-        {
-            typeof(LimitTradeSubscriber),
-            typeof(TradeSubscriber),
-            typeof(RegistrationSubscriber)
-        };
 
         public Startup(IHostingEnvironment env)
         {
@@ -70,7 +58,7 @@ namespace Lykke.Service.Affiliate
 
                 Log = CreateLogWithSlack(services, appSettings);
 
-                builder.RegisterModule(new ServiceModule(appSettings, Log));
+                builder.RegisterModule(new ServiceModule(appSettings.Nested(x => x.AffiliateClickService), Log));
                 builder.Populate(services);
                 ApplicationContainer = builder.Build();
 
@@ -123,10 +111,6 @@ namespace Lykke.Service.Affiliate
             try
             {
                 // NOTE: Service not yet recieve and process requests here
-                StartSubscribers();
-
-                _triggerHost = new TriggerHost(new AutofacServiceProvider(ApplicationContainer));
-                _triggerHostTask = _triggerHost.Start();
 
                 await ApplicationContainer.Resolve<IStartupManager>().StartAsync();
 
@@ -144,10 +128,6 @@ namespace Lykke.Service.Affiliate
             try
             {
                 // NOTE: Service still can recieve and process requests here, so take care about it if you add logic here.
-                StopSubscribers();
-
-                _triggerHost?.Cancel();
-                await _triggerHostTask;
 
                 await ApplicationContainer.Resolve<IShutdownManager>().StopAsync();
             }
@@ -192,7 +172,7 @@ namespace Lykke.Service.Affiliate
 
             aggregateLogger.AddLog(consoleLogger);
 
-            var dbLogConnectionStringManager = settings.Nested(x => x.AffiliateService.Db.LogsConnString);
+            var dbLogConnectionStringManager = settings.Nested(x => x.AffiliateClickService.Db.LogsConnString);
             var dbLogConnectionString = dbLogConnectionStringManager.CurrentValue;
 
             if (string.IsNullOrEmpty(dbLogConnectionString))
@@ -228,22 +208,6 @@ namespace Lykke.Service.Affiliate
             aggregateLogger.AddLog(azureStorageLogger);
 
             return aggregateLogger;
-        }
-
-        private void StartSubscribers()
-        {
-            foreach (var subscriber in _subscribers)
-            {
-                ((IQueueSubscriber)ApplicationContainer.Resolve(subscriber)).Start();
-            }
-        }
-
-        private void StopSubscribers()
-        {
-            foreach (var subscriber in _subscribers)
-            {
-                ((IQueueSubscriber)ApplicationContainer.Resolve(subscriber)).Stop();
-            }
         }
     }
 }

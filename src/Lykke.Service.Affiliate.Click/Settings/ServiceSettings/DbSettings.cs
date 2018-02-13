@@ -8,8 +8,5 @@ namespace Lykke.Service.Affiliate.Settings.ServiceSettings
 
         [AzureTableCheck]
         public string LogsConnString { get; set; }
-
-        [AzureTableCheck]
-        public string AzureConnString { get; set; }
     }
 }
