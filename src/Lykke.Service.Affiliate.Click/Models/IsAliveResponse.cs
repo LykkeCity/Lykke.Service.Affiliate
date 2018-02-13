@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lykke.Service.Affiliate.Models
+namespace Lykke.Service.Affiliate.Click.Models
 {
     public class IsAliveResponse
     {

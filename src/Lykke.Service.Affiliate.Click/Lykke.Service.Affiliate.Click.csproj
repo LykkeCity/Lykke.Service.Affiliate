@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <Version>1.0.1</Version>
-    <AssemblyName>Lykke.Service.Affiliate</AssemblyName>
-    <RootNamespace>Lykke.Service.Affiliate</RootNamespace>
+    <AssemblyName>Lykke.Service.Affiliate.Click</AssemblyName>
+    <RootNamespace>Lykke.Service.Affiliate.Click</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -47,8 +47,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Lykke.Service.Affiliate.AzureRepositories\Lykke.Service.Affiliate.MongoRepositories.csproj" />
     <ProjectReference Include="..\Lykke.Service.Affiliate.Core\Lykke.Service.Affiliate.Core.csproj" />
+    <ProjectReference Include="..\Lykke.Service.Affiliate.MongoRepositories\Lykke.Service.Affiliate.MongoRepositories.csproj" />
     <ProjectReference Include="..\Lykke.Service.Affiliate.Services\Lykke.Service.Affiliate.Services.csproj" />
   </ItemGroup>
 

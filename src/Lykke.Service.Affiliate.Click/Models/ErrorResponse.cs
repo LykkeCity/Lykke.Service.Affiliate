@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Lykke.Service.Affiliate.Models
+namespace Lykke.Service.Affiliate.Click.Models
 {
     public class ErrorResponse
     {

@@ -1,7 +1,7 @@
-﻿using Lykke.Service.Affiliate.Settings.ServiceSettings;
-using Lykke.Service.Affiliate.Settings.SlackNotifications;
+﻿using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
+using Lykke.Service.Affiliate.Click.Settings.SlackNotifications;
 
-namespace Lykke.Service.Affiliate.Settings
+namespace Lykke.Service.Affiliate.Click.Settings
 {
     public class AppSettings
     {

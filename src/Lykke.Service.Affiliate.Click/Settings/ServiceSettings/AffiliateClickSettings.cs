@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lykke.Service.Affiliate.Settings.ServiceSettings
+namespace Lykke.Service.Affiliate.Click.Settings.ServiceSettings
 {
     public class AffiliateClickSettings
     {

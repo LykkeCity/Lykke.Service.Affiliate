@@ -1,18 +1,15 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Common.Log;
 using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using Lykke.Service.Affiliate.AzureRepositories.Repositories;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
+using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
-using Lykke.Service.Affiliate.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Services;
 using Lykke.SettingsReader;
-using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
-namespace Lykke.Service.Affiliate.Modules
+namespace Lykke.Service.Affiliate.Click.Modules
 {
     public class ServiceModule : Module
     {

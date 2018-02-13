@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Lykke.Common.Extensions;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
+using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
-using Lykke.Service.Affiliate.Models;
-using Lykke.Service.Affiliate.Settings.ServiceSettings;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Lykke.Service.Affiliate.Controllers
+namespace Lykke.Service.Affiliate.Click.Controllers
 {
     public class HomeController : Controller
     {

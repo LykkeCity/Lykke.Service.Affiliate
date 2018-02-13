@@ -7,18 +7,17 @@ using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
 using Lykke.Logs;
+using Lykke.Service.Affiliate.Click.Modules;
+using Lykke.Service.Affiliate.Click.Settings;
 using Lykke.Service.Affiliate.Core.Services;
-using Lykke.Service.Affiliate.Settings;
-using Lykke.Service.Affiliate.Modules;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Lykke.Service.Affiliate
+namespace Lykke.Service.Affiliate.Click
 {
     public class Startup
     {

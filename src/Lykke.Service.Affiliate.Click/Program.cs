@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace Lykke.Service.Affiliate
+namespace Lykke.Service.Affiliate.Click
 {
     internal sealed class Program
     {
