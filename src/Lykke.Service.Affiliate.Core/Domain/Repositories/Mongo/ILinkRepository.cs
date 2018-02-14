@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
 {
@@ -13,5 +14,6 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
     {
         Task<ILink> CreateAsync(string affiliateId, string redirectUrl);
         Task<ILink> GetAsync(string key);
+        Task<IEnumerable<ILink>> GetLinks(string clientId);
     }
 }

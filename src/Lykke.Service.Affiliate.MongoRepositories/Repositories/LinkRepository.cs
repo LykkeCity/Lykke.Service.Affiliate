@@ -13,7 +13,7 @@ namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
         public string Key => BsonId;
 
         public string AffiliateId { get; set; }
-        
+
         public string RedirectUrl { get; set; }
 
         public static LinkEntity Create(string affiliateId, string redirectUrl)
@@ -48,6 +48,11 @@ namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
         public async Task<ILink> GetAsync(string key)
         {
             return await _table.GetDataAsync(key);
+        }
+
+        public async Task<IEnumerable<ILink>> GetLinks(string clientId)
+        {
+            return await _table.GetDataAsync(x => x.AffiliateId == clientId);
         }
     }
 }

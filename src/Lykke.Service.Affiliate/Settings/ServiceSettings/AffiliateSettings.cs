@@ -7,5 +7,7 @@
         public RabbitRegistrationSettings RabbitRegistration { get; set; }
         
         public RabbitMeSettings RabbitMe { get; set; }
+
+        public string AffiliateClickUrl { get; set; }
     }
 }
