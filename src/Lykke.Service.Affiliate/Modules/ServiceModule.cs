@@ -34,7 +34,7 @@ namespace Lykke.Service.Affiliate.Modules
             //  builder.RegisterType<QuotesPublisher>()
             //      .As<IQuotesPublisher>()
             //      .WithParameter(TypedParameter.From(_settings.CurrentValue.QuotesPublication))
-
+            
             builder.RegisterInstance(_settings.CurrentValue.AffiliateService.RabbitMe);
             builder.RegisterInstance(_settings.CurrentValue.AffiliateService.RabbitRegistration);
 
@@ -57,6 +57,8 @@ namespace Lykke.Service.Affiliate.Modules
             RegisterRabbitMqSubscribers(builder);
 
             builder.RegisterType<AffiliateService>().As<IAffiliateService>();
+
+            builder.RegisterType<LinkService>().As<ILinkService>().WithParameter(TypedParameter.From(_settings.CurrentValue.AffiliateService.AffiliateClickUrl));
         }
 
         private void RegisterRabbitMqSubscribers(ContainerBuilder builder)
@@ -71,7 +73,7 @@ namespace Lykke.Service.Affiliate.Modules
         {
             var mongoClient = new MongoClient(_settings.ConnectionString(x => x.AffiliateService.Db.MongoConnString).CurrentValue);
 
-            builder.RegisterInstance(new ReferralRepository(new MongoStorage<ReferralEntity>(mongoClient, "Affiliates"))).As<IReferralRepository>();
+            builder.RegisterInstance(new ReferralRepository(new MongoStorage<ReferralEntity>(mongoClient, "Referrals"))).As<IReferralRepository>();
 
             builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links"))).As<ILinkRepository>();
 
