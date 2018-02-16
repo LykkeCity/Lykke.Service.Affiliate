@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.AzureRepositories.Mongo;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
+using Lykke.Service.Affiliate.MongoRepositories.Mongo;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
+namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 {
     public class LinkEntity : MongoEntity, ILink
     {
+        [BsonIgnore]
         public string Key => BsonId;
 
         public string AffiliateId { get; set; }
@@ -53,6 +54,11 @@ namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
         public async Task<IEnumerable<ILink>> GetLinks(string clientId)
         {
             return await _table.GetDataAsync(x => x.AffiliateId == clientId);
+        }
+
+        public async Task<IEnumerable<ILink>> GetAllLinks()
+        {
+            return await _table.GetDataAsync();
         }
     }
 }

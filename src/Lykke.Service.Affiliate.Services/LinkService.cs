@@ -19,11 +19,11 @@ namespace Lykke.Service.Affiliate.Services
             _affiliateClickUri = new Uri(affiliateClickUrl);
         }
 
-        public async Task<string> CreateNewLink(string clientId, string redirectUrl)
+        public async Task<LinkResult> CreateNewLink(string clientId, string redirectUrl)
         {
             var link = await _linkRepository.CreateAsync(clientId, redirectUrl);
 
-            return GetLinkUrl(link.Key);
+            return new LinkResult { Url = GetLinkUrl(link.Key), RedirectUrl = redirectUrl };
         }
 
         public async Task<IEnumerable<LinkResult>> GetLinks(string clientId)

@@ -15,12 +15,6 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
 {
     public class TradeSubscriber : IQueueSubscriber
     {
-#if DEBUG
-        private const bool QueueDurable = false;
-#else
-        private const bool QueueDurable = true;
-#endif
-
         private readonly ILog _log;
 
         private readonly RabbitMeSettings _rabbitConfig;
@@ -43,8 +37,7 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
                 _rabbitConfig.ExchangeTrade,
                 _rabbitConfig.QueueTrade);
 
-            if (QueueDurable)
-                settings.MakeDurable();
+            settings.MakeDurable();
 
             try
             {
@@ -88,7 +81,7 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
                             {
                                 await _paidFeeQueueWriter.AddPaidFee(Guid.NewGuid(), item.Transfer.Asset,
                                                        item.Transfer.FromClientId, item.Transfer.ToClientId, (decimal)item.Transfer.Volume,
-                                                       item.Transfer.Date, queueMessage.Order.Id);
+                                                       item.Transfer.Date, queueMessage.Order.Id, trade.MarketClientId, trade.LimitClientId);
                             }
                             catch (Exception e)
                             {

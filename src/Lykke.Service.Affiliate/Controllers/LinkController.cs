@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Lykke.Service.Affiliate.Contracts;
 using Lykke.Service.Affiliate.Core.Domain.Repositories;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
@@ -16,44 +19,42 @@ namespace Lykke.Service.Affiliate.Controllers
     public class LinkController : Controller
     {
         private readonly ILinkService _linkService;
+        private readonly IMapper _mapper;
 
-        public LinkController(ILinkService linkService)
+        public LinkController(ILinkService linkService, IMapper mapper)
         {
             _linkService = linkService;
+            _mapper = mapper;
         }
 
         [HttpPost]
         [SwaggerOperation("RegisterLink")]
-        public async Task<IActionResult> RegisterLink([FromBody]RegisterLinkModel model)
+        [ProducesResponseType(typeof(LinkModel), (int)HttpStatusCode.OK)]
+        public async Task<LinkModel> RegisterLink([FromBody]RegisterLinkModel model)
         {
             if (string.IsNullOrWhiteSpace(model.PartnerId))
-                return BadRequest();
+                throw new ApiException(HttpStatusCode.BadRequest, "Partner id must be not empty string");
 
             if (string.IsNullOrWhiteSpace(model.RedirectUrl) || !Uri.IsWellFormedUriString(model.RedirectUrl, UriKind.Absolute))
-                return BadRequest();
-
+                throw new ApiException(HttpStatusCode.BadRequest, "Redirect URL must be a valid URL string");
+            
             var link = await _linkService.CreateNewLink(model.PartnerId, model.RedirectUrl);
 
-            return Ok(new RegisterLinkResponse
-            {
-                Url = link
-            });
+            var result = _mapper.Map<LinkResult, LinkModel>(link);
+
+            return result;
         }
 
         [HttpGet]
         [SwaggerOperation("Links")]
-        public async Task<IActionResult> GetLinks([FromQuery]string clientId)
+        [ProducesResponseType(typeof(IEnumerable<LinkModel>), (int)HttpStatusCode.OK)]
+        public async Task<IEnumerable<LinkModel>> GetLinks([FromQuery]string partnerId)
         {
-            var links = await _linkService.GetLinks(clientId);
+            var links = await _linkService.GetLinks(partnerId);
 
-            return Ok(new GetLinksResponse
-            {
-                Links = links.Select(x => new GetLinkResponse
-                {
-                    RedirectUrl = x.RedirectUrl,
-                    Url = x.Url
-                })
-            });
+            var result = _mapper.Map<IEnumerable<LinkResult>, IEnumerable<LinkModel>>(links);
+
+            return result;
         }
     }
 }

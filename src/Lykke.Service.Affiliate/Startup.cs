@@ -4,12 +4,16 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AzureStorage.Tables;
+using Common;
 using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
 using Lykke.Common.ApiLibrary.Swagger;
 using Lykke.JobTriggers.Triggers;
 using Lykke.Logs;
 using Lykke.Service.Affiliate.Core.Services;
+using Lykke.Service.Affiliate.Core.Services.Managers;
+using Lykke.Service.Affiliate.Middleware;
+using Lykke.Service.Affiliate.Models;
 using Lykke.Service.Affiliate.Settings;
 using Lykke.Service.Affiliate.Modules;
 using Lykke.Service.Affiliate.RabbitSubscribers;
@@ -20,6 +24,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Lykke.Service.Affiliate
 {
@@ -71,6 +76,8 @@ namespace Lykke.Service.Affiliate
                 Log = CreateLogWithSlack(services, appSettings);
 
                 builder.RegisterModule(new ServiceModule(appSettings, Log));
+                builder.RegisterModule<AutoMapperModules>();
+
                 builder.Populate(services);
                 ApplicationContainer = builder.Build();
 
@@ -92,8 +99,10 @@ namespace Lykke.Service.Affiliate
                     app.UseDeveloperExceptionPage();
                 }
 
+                
                 app.UseLykkeForwardedHeaders();
                 app.UseLykkeMiddleware("Affiliate", ex => new { Message = "Technical problem" });
+                app.UseMiddleware<ApiExceptionHandlerMiddleware>("Affiliate");
 
                 app.UseMvc();
                 app.UseSwagger(c =>

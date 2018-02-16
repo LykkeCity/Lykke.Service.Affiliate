@@ -8,6 +8,8 @@
         
         public RabbitMeSettings RabbitMe { get; set; }
 
+        public AccrualPeriodSettings AccrualPeriodSettings { get; set; }
+
         public string AffiliateClickUrl { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Autofac;
 using Common.Log;
 using Lykke.Service.Affiliate.AzureRepositories.Mongo;
-using Lykke.Service.Affiliate.AzureRepositories.Repositories;
 using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
+using Lykke.Service.Affiliate.Core.Services.Managers;
+using Lykke.Service.Affiliate.MongoRepositories.Repositories;
 using Lykke.Service.Affiliate.Services;
+using Lykke.Service.Affiliate.Services.Managers;
 using Lykke.SettingsReader;
 using MongoDB.Driver;
 

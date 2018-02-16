@@ -8,5 +8,7 @@ namespace Lykke.Service.Affiliate.Core.Services
     public interface IAffiliateService
     {
         Task Register(string ip, string clientId);
+
+        Task<IEnumerable<string>> GetAllAffiliates();
     }
 }

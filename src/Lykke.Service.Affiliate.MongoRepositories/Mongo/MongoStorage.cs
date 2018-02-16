@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.AzureRepositories.Utils;
+using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;

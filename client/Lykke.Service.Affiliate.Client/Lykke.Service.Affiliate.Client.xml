@@ -4,5 +4,423 @@
         <name>Lykke.Service.Affiliate.Client</name>
     </assembly>
     <members>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.BaseUri">
+            <summary>
+            The base URI of the service.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.SerializationSettings">
+            <summary>
+            Gets or sets json serialization settings.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.DeserializationSettings">
+            <summary>
+            Gets or sets json deserialization settings.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.#ctor(System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the AffiliateAPI class.
+            </summary>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.#ctor(System.Net.Http.HttpClientHandler,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the AffiliateAPI class.
+            </summary>
+            <param name='rootHandler'>
+            Optional. The http client handler used to handle http transport.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.#ctor(System.Uri,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the AffiliateAPI class.
+            </summary>
+            <param name='baseUri'>
+            Optional. The base URI of the service.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.#ctor(System.Uri,System.Net.Http.HttpClientHandler,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the AffiliateAPI class.
+            </summary>
+            <param name='baseUri'>
+            Optional. The base URI of the service.
+            </param>
+            <param name='rootHandler'>
+            Optional. The http client handler used to handle http transport.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.Initialize">
+            <summary>
+            Initializes client properties.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.GetReferralsWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='partnerId'>
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.LinksWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='partnerId'>
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.RegisterLinkWithHttpMessagesAsync(Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='model'>
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="T:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions">
+            <summary>
+            Extension methods for AffiliateAPI.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.GetReferrals(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='partnerId'>
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.GetReferralsAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='partnerId'>
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.IsAlive(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.IsAliveAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.Links(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='partnerId'>
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.LinksAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='partnerId'>
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.RegisterLink(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='model'>
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.RegisterLinkAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='model'>
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="T:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.BaseUri">
+            <summary>
+            The base URI of the service.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.SerializationSettings">
+            <summary>
+            Gets or sets json serialization settings.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.DeserializationSettings">
+            <summary>
+            Gets or sets json deserialization settings.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.GetReferralsWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='partnerId'>
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.LinksWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='partnerId'>
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.RegisterLinkWithHttpMessagesAsync(Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='model'>
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.ErrorResponse.#ctor">
+            <summary>
+            Initializes a new instance of the ErrorResponse class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.ErrorResponse.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IList{System.String}})">
+            <summary>
+            Initializes a new instance of the ErrorResponse class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.ErrorResponse.ErrorMessage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.ErrorResponse.ModelErrors">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.#ctor">
+            <summary>
+            Initializes a new instance of the IsAliveResponse class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.#ctor(System.Boolean,System.String,System.String,System.String,System.Collections.Generic.IList{Lykke.Service.Affiliate.Client.AutorestClient.Models.IssueIndicator})">
+            <summary>
+            Initializes a new instance of the IsAliveResponse class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.Name">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.Version">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.Env">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.IsDebug">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.IssueIndicators">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.IsAliveResponse.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.IssueIndicator.#ctor">
+            <summary>
+            Initializes a new instance of the IssueIndicator class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.IssueIndicator.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the IssueIndicator class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IssueIndicator.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.IssueIndicator.Value">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.LinkModel.#ctor">
+            <summary>
+            Initializes a new instance of the LinkModel class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.LinkModel.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the LinkModel class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.LinkModel.Url">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.LinkModel.RedirectUrl">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.ReferralModel.#ctor">
+            <summary>
+            Initializes a new instance of the ReferralModel class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.ReferralModel.#ctor(System.DateTime,System.String)">
+            <summary>
+            Initializes a new instance of the ReferralModel class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.ReferralModel.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.ReferralModel.CreatedDt">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.ReferralModel.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.#ctor">
+            <summary>
+            Initializes a new instance of the RegisterLinkModel class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the RegisterLinkModel class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.PartnerId">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.RedirectUrl">
+            <summary>
+            </summary>
+        </member>
     </members>
 </doc>
