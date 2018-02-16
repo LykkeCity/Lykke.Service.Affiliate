@@ -46,7 +46,7 @@ namespace Lykke.Service.Affiliate.Client
 
         public async Task<IEnumerable<LinkModel>> GetLinks(string partnerId)
         {
-            var result = await _affiliateApi.LinksAsync(partnerId);
+            var result = await _affiliateApi.GetLinksAsync(partnerId);
 
             var output = _mapper.Map<IEnumerable<LinkModel>>(result);
 
