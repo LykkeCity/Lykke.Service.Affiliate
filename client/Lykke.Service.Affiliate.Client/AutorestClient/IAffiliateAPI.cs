@@ -45,17 +45,6 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<IList<ReferralModel>>> GetReferralsWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <summary>
-        /// Checks service is alive
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <param name='partnerId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -64,7 +53,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<LinkModel>>> LinksWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LinkModel>>> GetLinksWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='model'>
         /// </param>
@@ -75,6 +64,17 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<LinkModel>> RegisterLinkWithHttpMessagesAsync(RegisterLinkModel model = default(RegisterLinkModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Checks service is alive
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

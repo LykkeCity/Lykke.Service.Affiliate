@@ -44,42 +44,14 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
                 }
             }
 
-            /// <summary>
-            /// Checks service is alive
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static object IsAlive(this IAffiliateAPI operations)
-            {
-                return operations.IsAliveAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks service is alive
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> IsAliveAsync(this IAffiliateAPI operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.IsAliveWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='partnerId'>
             /// </param>
-            public static IList<LinkModel> Links(this IAffiliateAPI operations, string partnerId = default(string))
+            public static IList<LinkModel> GetLinks(this IAffiliateAPI operations, string partnerId = default(string))
             {
-                return operations.LinksAsync(partnerId).GetAwaiter().GetResult();
+                return operations.GetLinksAsync(partnerId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -90,9 +62,9 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LinkModel>> LinksAsync(this IAffiliateAPI operations, string partnerId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LinkModel>> GetLinksAsync(this IAffiliateAPI operations, string partnerId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.LinksWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLinksWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -119,6 +91,34 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             public static async Task<LinkModel> RegisterLinkAsync(this IAffiliateAPI operations, RegisterLinkModel model = default(RegisterLinkModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegisterLinkWithHttpMessagesAsync(model, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks service is alive
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static object IsAlive(this IAffiliateAPI operations)
+            {
+                return operations.IsAliveAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks service is alive
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> IsAliveAsync(this IAffiliateAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.IsAliveWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
