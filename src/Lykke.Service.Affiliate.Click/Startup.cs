@@ -112,8 +112,6 @@ namespace Lykke.Service.Affiliate.Click
             {
                 // NOTE: Service not yet recieve and process requests here
 
-                await ApplicationContainer.Resolve<IStartupManager>().StartAsync();
-
                 await Log.WriteMonitorAsync("", $"Env: {Program.EnvInfo}", "Started");
             }
             catch (Exception ex)
@@ -128,8 +126,6 @@ namespace Lykke.Service.Affiliate.Click
             try
             {
                 // NOTE: Service still can recieve and process requests here, so take care about it if you add logic here.
-
-                await ApplicationContainer.Resolve<IShutdownManager>().StopAsync();
             }
             catch (Exception ex)
             {
