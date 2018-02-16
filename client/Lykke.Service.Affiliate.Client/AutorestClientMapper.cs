@@ -1,7 +1,13 @@
-﻿namespace Lykke.Service.Affiliate.Client
+﻿using AutoMapper;
+using Lykke.Service.Affiliate.Contracts;
+
+namespace Lykke.Service.Affiliate.Client
 {
-    public static class AutorestClientMapper
+    internal sealed class ClientAutomapperProfile : Profile
     {
-        
+        public ClientAutomapperProfile()
+        {
+
+        }
     }
 }

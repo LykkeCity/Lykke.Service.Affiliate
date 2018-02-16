@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
-using Lykke.Service.Affiliate.Core.Services;
+using Lykke.Service.Affiliate.Core.Services.Managers;
 
-namespace Lykke.Service.Affiliate.Services
+namespace Lykke.Service.Affiliate.Services.Managers
 {
     // NOTE: Sometimes, shutdown process should be expressed explicitly. 
     // If this is your case, use this class to manage shutdown.

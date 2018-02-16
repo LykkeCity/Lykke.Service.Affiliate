@@ -14,11 +14,12 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Azure
         public decimal Volume { get; set; }
         public DateTime Date { get; set; }
         public string Order { get; set; }
-
+        public string TradeClient { get; set; }
+        public string TradeOppositeClient { get; set; }
     }
 
     public interface IPaidFeeQueueWriter
     {
-        Task AddPaidFee(Guid id, string asset, string fromClient, string toClient, decimal volume, DateTime date, string order);
+        Task AddPaidFee(Guid id, string asset, string fromClient, string toClient, decimal volume, DateTime date, string order, string tradeClient, string tradeOppositeClient);
     }
 }

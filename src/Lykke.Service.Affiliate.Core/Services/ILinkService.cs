@@ -8,7 +8,7 @@ namespace Lykke.Service.Affiliate.Core.Services
 {
     public interface ILinkService
     {
-        Task<string> CreateNewLink(string clientId, string redirectUrl);
+        Task<LinkResult> CreateNewLink(string clientId, string redirectUrl);
         Task<IEnumerable<LinkResult>> GetLinks(string clientId);
     }
 

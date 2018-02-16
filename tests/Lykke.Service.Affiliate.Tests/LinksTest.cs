@@ -32,9 +32,8 @@ namespace Lykke.Service.Affiliate.Tests
             var subject2 = new LinkService(linkRepoMock.Object, baseUrl + "/");
             var result2 = await subject2.CreateNewLink("client", "redirect");
 
-            Assert.Equal($"{baseUrl}/{href}", result);
-            Assert.Equal($"{baseUrl}/{href}", result2);
-
+            Assert.Equal($"{baseUrl}/{href}", result.Url);
+            Assert.Equal($"{baseUrl}/{href}", result2.Url);
         }
     }
 

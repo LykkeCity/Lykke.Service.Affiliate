@@ -10,6 +10,7 @@ using Lykke.Logs;
 using Lykke.Service.Affiliate.Click.Modules;
 using Lykke.Service.Affiliate.Click.Settings;
 using Lykke.Service.Affiliate.Core.Services;
+using Lykke.Service.Affiliate.Core.Services.Managers;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
 using Microsoft.AspNetCore.Builder;

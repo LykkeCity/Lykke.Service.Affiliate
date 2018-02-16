@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.AzureRepositories.Mongo;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
+using Lykke.Service.Affiliate.MongoRepositories.Mongo;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
+namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 {
     public class LinkRedirectEntity : MongoEntity, ILinkRedirect
     {
+        [BsonIgnore]
         public string Ip => BsonId;
         public string LinkId { get; set; }
         public string AffiliateId { get; set; }

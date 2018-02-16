@@ -19,7 +19,7 @@ namespace Lykke.Service.Affiliate.AzureRepositories
             _queue = queue;
         }
 
-        public async Task AddPaidFee(Guid id, string asset, string fromClient, string toClient, decimal volume, DateTime date, string order)
+        public async Task AddPaidFee(Guid id, string asset, string fromClient, string toClient, decimal volume, DateTime date, string order, string tradeClient, string tradeOppositeClient)
         {
             var msg = new PaidFeeQueueItem
             {
@@ -29,7 +29,9 @@ namespace Lykke.Service.Affiliate.AzureRepositories
                 Id = id,
                 Order = order,
                 ToClient = toClient,
-                Volume = volume
+                Volume = volume,
+                TradeClient = tradeClient,
+                TradeOppositeClient = tradeOppositeClient
             };
 
             await _queue.PutRawMessageAsync(msg.ToJson());

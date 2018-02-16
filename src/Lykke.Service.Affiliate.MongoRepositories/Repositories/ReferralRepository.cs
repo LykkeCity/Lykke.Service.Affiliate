@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.AzureRepositories.Mongo;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
+using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
+namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 {
-    public class ReferralEntity : MongoEntity, IReferralEntity
+    public class Referral : MongoEntity, IReferral
     {
         [BsonIgnore]
         public string ReferralId => BsonId;
 
         public string AffiliateId { get; set; }
 
-        public static ReferralEntity Create(string affiliateId, string referralId)
+        [BsonIgnore]
+        public DateTime CreatedDt => BsonCreateDt;
+
+        public static Referral Create(string affiliateId, string referralId)
         {
-            return new ReferralEntity
+            return new Referral
             {
                 BsonId = referralId,
                 AffiliateId = affiliateId
@@ -28,16 +30,26 @@ namespace Lykke.Service.Affiliate.AzureRepositories.Repositories
 
     public class ReferralRepository : IReferralRepository
     {
-        private readonly IMongoStorage<ReferralEntity> _table;
+        private readonly IMongoStorage<Referral> _table;
 
-        public ReferralRepository(IMongoStorage<ReferralEntity> table)
+        public ReferralRepository(IMongoStorage<Referral> table)
         {
             _table = table;
         }
 
-        public Task SaveReferral(string clientId, string affiliateId)
+        public async Task<IReferral> SaveReferral(string clientId, string affiliateId)
         {
-            return _table.InsertOrModifyAsync(clientId, () => ReferralEntity.Create(affiliateId, clientId), (entity) => entity);
+            return await _table.InsertOrModifyAsync(clientId, () => Referral.Create(affiliateId, clientId), (entity) => entity);
+        }
+
+        public async Task<IEnumerable<IReferral>> GetReferrals(string partnerId)
+        {
+            return await _table.GetDataAsync(x => x.AffiliateId == partnerId);
+        }
+
+        public async Task<IEnumerable<IReferral>> GetAllReferrals()
+        {
+            return await _table.GetDataAsync();
         }
     }
 }
