@@ -7,15 +7,19 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
 {
     public interface IAccrualPeriod
     {
+        string Id { get; }
+        string ClientId { get; set; }
         DateTime StartDt { get; set; }
         DateTime EndDt { get; set; }
-        int AffiliateCount { get; set; }
+        bool Completed { get; set; }
     }
 
     public interface IAccrualPeriodRepository
     {
-        Task<IAccrualPeriod> GetLastPeriod();
+        Task<IAccrualPeriod> GetLastPeriod(string clientId);
 
-        Task CreatePeriod(DateTime startDt, DateTime endDt, int affiliateCount);
+        Task<IAccrualPeriod> CreatePeriod(string clientId, DateTime startDt, DateTime endDt);
+
+        Task SetCompleted(string accrualPeriodId);
     }
 }

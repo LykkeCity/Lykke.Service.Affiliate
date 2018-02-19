@@ -6,6 +6,8 @@ using Lykke.Service.Affiliate.Core;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Azure;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services.Processors;
+using Lykke.Service.ClientAccount.Client;
+using Lykke.Service.ClientAccount.Client.AutorestClient;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Lykke.Service.Affiliate.Services.Processors
@@ -18,12 +20,14 @@ namespace Lykke.Service.Affiliate.Services.Processors
         private readonly IPaidFeeRepository _paidFeeRepository;
         private readonly IBonusAccrualRepository _bonusAccrualRepository;
         private readonly IMemoryCache _memoryCache;
+        private readonly IClientAccountService _clientAccountService;
 
-        public PaidFeeProcessor(IPaidFeeRepository paidFeeRepository, IBonusAccrualRepository bonusAccrualRepository, IMemoryCache memoryCache)
+        public PaidFeeProcessor(IPaidFeeRepository paidFeeRepository, IBonusAccrualRepository bonusAccrualRepository, IMemoryCache memoryCache, IClientAccountService clientAccountService)
         {
             _paidFeeRepository = paidFeeRepository;
             _bonusAccrualRepository = bonusAccrualRepository;
             _memoryCache = memoryCache;
+            _clientAccountService = clientAccountService;
         }
 
         public async Task Process(PaidFeeQueueItem item)
@@ -75,9 +79,9 @@ namespace Lykke.Service.Affiliate.Services.Processors
             return _memoryCache.Get<IReferral>(Constants.GetCacheReferralKey(clientId))?.AffiliateId;
         }
 
-        private async Task<string> GetClientId(string walletId)
+        private Task<string> GetClientId(string walletId)
         {
-            return await Task.FromResult(walletId);
+            return _clientAccountService.GetClientByWalletAsync(walletId);
         }
     }
 }

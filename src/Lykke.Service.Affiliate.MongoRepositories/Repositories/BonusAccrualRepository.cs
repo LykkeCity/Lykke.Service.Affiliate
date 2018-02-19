@@ -45,5 +45,10 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         {
             return _table.InsertOrReplaceAsync(BonusAccrualEntity.Create(paidFeeId, clientId, assetId, amount));
         }
+
+        public async Task<IEnumerable<IBonusAccrual>> GetData(string affiliateId, DateTime startDt, DateTime endDt)
+        {
+            return await _table.GetDataAsync(x => x.ClientId == affiliateId && x.CreatedDt >= startDt && x.CreatedDt < endDt);
+        }
     }
 }
