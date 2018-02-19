@@ -1,15 +1,11 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 
 namespace Lykke.Service.Affiliate.Core.Services.Processors
 {
-    public class AccrualPeriodProcessorResult
-    {
-        public int AffiliateCount { get; set; }
-    }
-
     public interface IAccrualPeriodProcesor
     {
-        Task<AccrualPeriodProcessorResult> Process(DateTime startDt, DateTime endDt);
+        Task Process(IAccrualPeriod period);
     }
 }

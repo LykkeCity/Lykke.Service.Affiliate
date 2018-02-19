@@ -17,5 +17,6 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
     public interface IBonusAccrualRepository
     {
         Task Create(string paidFeeId, string clientId, string assetId, decimal amount);
+        Task<IEnumerable<IBonusAccrual>> GetData(string affiliateId, DateTime startDt, DateTime endDt);
     }
 }

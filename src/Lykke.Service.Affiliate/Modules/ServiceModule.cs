@@ -16,6 +16,8 @@ using Lykke.Service.Affiliate.Services;
 using Lykke.Service.Affiliate.Services.Managers;
 using Lykke.Service.Affiliate.Services.Processors;
 using Lykke.Service.Affiliate.Settings;
+using Lykke.Service.ClientAccount.Client;
+using Lykke.Service.ExchangeOperations.Client;
 using Lykke.SettingsReader;
 using MongoDB.Driver;
 
@@ -39,9 +41,10 @@ namespace Lykke.Service.Affiliate.Modules
             //  builder.RegisterType<QuotesPublisher>()
             //      .As<IQuotesPublisher>()
             //      .WithParameter(TypedParameter.From(_settings.CurrentValue.QuotesPublication))
+            var settings = _settings.CurrentValue;
 
-            builder.RegisterInstance(_settings.CurrentValue.AffiliateService.RabbitMe);
-            builder.RegisterInstance(_settings.CurrentValue.AffiliateService.RabbitRegistration);
+            builder.RegisterInstance(settings.AffiliateService.RabbitMe);
+            builder.RegisterInstance(settings.AffiliateService.RabbitRegistration);
 
             builder.RegisterInstance(_log)
                 .As<ILog>()
@@ -65,12 +68,16 @@ namespace Lykke.Service.Affiliate.Modules
             builder.RegisterType<AffiliateService>().As<IAffiliateService>();
             builder.RegisterType<ReferralService>().As<IReferralService>();
 
-            builder.RegisterType<LinkService>().As<ILinkService>().WithParameter(TypedParameter.From(_settings.CurrentValue.AffiliateService.AffiliateClickUrl));
+            builder.RegisterType<LinkService>().As<ILinkService>().WithParameter(TypedParameter.From(settings.AffiliateService.AffiliateClickUrl));
 
             builder.AddTriggers(pool =>
             {
                 pool.AddDefaultConnection(_settings.ConnectionString(x => x.AffiliateService.Db.AzureConnString));
             });
+
+            builder.RegisterLykkeServiceClient(settings.ClientAccountServiceClient.ServiceUrl);
+
+            builder.RegisterInstance(new ExchangeOperationsServiceClient(settings.ExchangeOperationsServiceClient.ServiceUrl)).As<IExchangeOperationsServiceClient>().SingleInstance();
         }
 
         private void RegisterRabbitMqSubscribers(ContainerBuilder builder)
@@ -82,9 +89,13 @@ namespace Lykke.Service.Affiliate.Modules
 
         private void RegisterProcessors(ContainerBuilder builder)
         {
-            builder.RegisterType<AccrualPeriodProcesor>().As<IAccrualPeriodProcesor>();
-            builder.RegisterType<AffiliateProcessor>().As<IAffiliateProcessor>();
-            builder.RegisterType<BonusProcessor>().As<IBonusProcessor>();
+            builder.RegisterType<AccrualPeriodProcesor>().As<IAccrualPeriodProcesor>()
+                .WithParameter("feeClientId", _settings.CurrentValue.AffiliateService.FeeClientId);
+
+            builder.RegisterType<BonusProcessor>().As<IBonusProcessor>()
+                .WithParameter("period", _settings.CurrentValue.AffiliateService.AccrualPeriodSettings.Period)
+                .WithParameter("periodOffset", _settings.CurrentValue.AffiliateService.AccrualPeriodSettings.PeriodOffset);
+
             builder.RegisterType<PaidFeeProcessor>().As<IPaidFeeProcessor>();
         }
 
@@ -101,6 +112,10 @@ namespace Lykke.Service.Affiliate.Modules
             builder.RegisterInstance(new PaidFeeRepository(new MongoStorage<PaidFeeEntity>(mongoClient, "PaidFees"))).As<IPaidFeeRepository>();
 
             builder.RegisterInstance(new BonusAccrualRepository(new MongoStorage<BonusAccrualEntity>(mongoClient, "BonusAccruals"))).As<IBonusAccrualRepository>();
+
+            builder.RegisterInstance(new ClientAccrualRepository(new MongoStorage<ClientAccrualEntity>(mongoClient, "ClientAccruals"))).As<IClientAccrualRepository>();
+
+            builder.RegisterInstance(new AccrualPeriodRepository(new MongoStorage<AccrualPeriodEntity>(mongoClient, "AccrualPeriods"))).As<IAccrualPeriodRepository>();
         }
 
         private void BindQueue(ContainerBuilder builder)
