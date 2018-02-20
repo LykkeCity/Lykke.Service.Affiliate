@@ -40,7 +40,10 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
                 if (DateTime.UtcNow - entity.BsonCreateDt < ipCache)
                     return null;
 
-                return LinkRedirectEntity.Create(ip, affiliateId, linkId);
+                entity.AffiliateId = affiliateId;
+                entity.LinkId = linkId;
+
+                return entity;
             });
         }
 
