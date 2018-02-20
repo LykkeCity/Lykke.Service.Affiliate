@@ -35,7 +35,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
             var paidFeeId = item.Id.ToString();
 
             await _paidFeeRepository.Create(paidFeeId, item.AssetId, item.FromClient, item.ToClient, item.Volume,
-                item.Order, item.TradeClient, item.TradeOppositeClient);
+                item.Order, item.TradeClient, item.TradeOppositeClient, item.TradeVolume);
 
             var clientAffiliate = GetAffiliate(await GetClientId(item.TradeClient));
             var oppositeClientAffiliate = GetAffiliate(await GetClientId(item.TradeOppositeClient));
@@ -61,7 +61,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
         {
             var bonus = item.Volume * OneAffiliateShare;
 
-            await _bonusAccrualRepository.Create(paidFeeId, affiliateId, item.AssetId, bonus);
+            await _bonusAccrualRepository.Create(paidFeeId, affiliateId, item.AssetId, item.TradeVolume, bonus);
         }
 
         private async Task AddBothFeeBonus(string firstAffiliateId, string secondAffiliateId, string paidFeeId, PaidFeeQueueItem item)
@@ -69,8 +69,8 @@ namespace Lykke.Service.Affiliate.Services.Processors
             var bonus = item.Volume * BothAffiliateShare;
 
             await Task.WhenAll(
-                _bonusAccrualRepository.Create(paidFeeId, firstAffiliateId, item.AssetId, bonus),
-                _bonusAccrualRepository.Create(paidFeeId, secondAffiliateId, item.AssetId, bonus)
+                _bonusAccrualRepository.Create(paidFeeId, firstAffiliateId, item.AssetId, item.TradeVolume, bonus),
+                _bonusAccrualRepository.Create(paidFeeId, secondAffiliateId, item.AssetId, item.TradeVolume, bonus)
             );
         }
 

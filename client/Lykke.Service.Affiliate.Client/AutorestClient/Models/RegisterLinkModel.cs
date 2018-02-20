@@ -24,9 +24,9 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the RegisterLinkModel class.
         /// </summary>
-        public RegisterLinkModel(string partnerId = default(string), string redirectUrl = default(string))
+        public RegisterLinkModel(string clientId = default(string), string redirectUrl = default(string))
         {
-            PartnerId = partnerId;
+            ClientId = clientId;
             RedirectUrl = redirectUrl;
             CustomInit();
         }
@@ -38,8 +38,8 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "PartnerId")]
-        public string PartnerId { get; set; }
+        [JsonProperty(PropertyName = "ClientId")]
+        public string ClientId { get; set; }
 
         /// <summary>
         /// </summary>

@@ -21,7 +21,7 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         {
             return new LinkEntity
             {
-                BsonId = Guid.NewGuid().ToString("n"),
+                BsonId = Guid.NewGuid().ToString("n").Substring(0, 12),
                 AffiliateId = affiliateId,
                 RedirectUrl = redirectUrl
             };

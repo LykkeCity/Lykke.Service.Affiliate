@@ -31,11 +31,11 @@ namespace Lykke.Service.Affiliate.Client
             _affiliateApi = new AffiliateAPI(new Uri(serviceUrl));
         }
 
-        public async Task<LinkModel> RegisterLink(string partnerId, string redirectUrl)
+        public async Task<LinkModel> RegisterLink(string clientId, string redirectUrl)
         {
             var result = await _affiliateApi.RegisterLinkAsync(new AutorestClient.Models.RegisterLinkModel
             {
-                PartnerId = partnerId,
+                ClientId = clientId,
                 RedirectUrl = redirectUrl
             });
 
@@ -44,18 +44,18 @@ namespace Lykke.Service.Affiliate.Client
             return output;
         }
 
-        public async Task<IEnumerable<LinkModel>> GetLinks(string partnerId)
+        public async Task<IEnumerable<LinkModel>> GetLinks(string clientId)
         {
-            var result = await _affiliateApi.GetLinksAsync(partnerId);
+            var result = await _affiliateApi.GetLinksAsync(clientId);
 
             var output = _mapper.Map<IEnumerable<LinkModel>>(result);
 
             return output;
         }
 
-        public async Task<IEnumerable<ReferralModel>> GetReferrals(string partnerId)
+        public async Task<IEnumerable<ReferralModel>> GetReferrals(string clientId)
         {
-            var result = await _affiliateApi.GetReferralsAsync(partnerId);
+            var result = await _affiliateApi.GetReferralsAsync(clientId);
 
             var output = _mapper.Map<IEnumerable<ReferralModel>>(result);
 

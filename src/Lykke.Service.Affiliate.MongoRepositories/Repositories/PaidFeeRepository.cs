@@ -24,9 +24,9 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         public string Order { get; set; }
         public string TradeClient { get; set; }
         public string TradeOppositeClient { get; set; }
+        public decimal TradeVolume { get; set; }
 
-        public static PaidFeeEntity Create(string id, string assetId, string fromClientId, string toClientId, decimal volume,
-            string orderId, string tradeClient, string tradeOppositeClient)
+        public static PaidFeeEntity Create(string id, string assetId, string fromClientId, string toClientId, decimal volume, string orderId, string tradeClient, string tradeOppositeClient, decimal tradeVolume)
         {
             return new PaidFeeEntity
             {
@@ -37,7 +37,8 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
                 Volume = volume,
                 Order = orderId,
                 TradeClient = tradeClient,
-                TradeOppositeClient = tradeOppositeClient
+                TradeOppositeClient = tradeOppositeClient,
+                TradeVolume = tradeVolume
             };
         }
     }
@@ -51,11 +52,10 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
             _table = table;
         }
 
-        public Task Create(string id, string assetId, string fromClientId, string toClientId, decimal volume,
-            string orderId, string tradeClient, string tradeOppositeClient)
+        public Task Create(string id, string assetId, string fromClientId, string toClientId, decimal volume, string orderId, string tradeClient, string tradeOppositeClient, decimal tradeVolume)
         {
             return _table.InsertOrReplaceAsync(PaidFeeEntity.Create(id, assetId, fromClientId, toClientId, volume,
-                orderId, tradeClient, tradeOppositeClient));
+                orderId, tradeClient, tradeOppositeClient, tradeVolume));
         }
     }
 }

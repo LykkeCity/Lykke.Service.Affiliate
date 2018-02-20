@@ -16,11 +16,11 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
         string Order { get; set; }
         string TradeClient { get; set; }
         string TradeOppositeClient { get; set; }
+        decimal TradeVolume { get; set; }
     }
 
     public interface IPaidFeeRepository
     {
-        Task Create(string id, string assetId, string fromClientId, string toClientId, decimal volume,
-            string orderId, string tradeClient, string tradeOppositeClient);
+        Task Create(string id, string assetId, string fromClientId, string toClientId, decimal volume, string orderId, string tradeClient, string tradeOppositeClient, decimal tradeVolume);
     }
 }

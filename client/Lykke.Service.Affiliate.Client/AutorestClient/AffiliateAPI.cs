@@ -142,7 +142,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             };
             CustomInitialize();
         }
-        /// <param name='partnerId'>
+        /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -159,7 +159,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ReferralModel>>> GetReferralsWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ReferralModel>>> GetReferralsWithHttpMessagesAsync(string clientId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -168,7 +168,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("partnerId", partnerId);
+                tracingParameters.Add("clientId", clientId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetReferrals", tracingParameters);
             }
@@ -176,9 +176,9 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Affiliate/referrals").ToString();
             List<string> _queryParameters = new List<string>();
-            if (partnerId != null)
+            if (clientId != null)
             {
-                _queryParameters.Add(string.Format("partnerId={0}", System.Uri.EscapeDataString(partnerId)));
+                _queryParameters.Add(string.Format("clientId={0}", System.Uri.EscapeDataString(clientId)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -271,7 +271,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             return _result;
         }
 
-        /// <param name='partnerId'>
+        /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -288,7 +288,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<LinkModel>>> GetLinksWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<LinkModel>>> GetLinksWithHttpMessagesAsync(string clientId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -297,7 +297,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("partnerId", partnerId);
+                tracingParameters.Add("clientId", clientId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetLinks", tracingParameters);
             }
@@ -305,9 +305,9 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/Affiliate/links").ToString();
             List<string> _queryParameters = new List<string>();
-            if (partnerId != null)
+            if (clientId != null)
             {
-                _queryParameters.Add(string.Format("partnerId={0}", System.Uri.EscapeDataString(partnerId)));
+                _queryParameters.Add(string.Format("clientId={0}", System.Uri.EscapeDataString(clientId)));
             }
             if (_queryParameters.Count > 0)
             {
