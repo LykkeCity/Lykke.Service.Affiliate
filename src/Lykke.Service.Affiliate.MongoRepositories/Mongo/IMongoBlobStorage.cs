@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Mongo
+namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
 {
     public interface IMongoBlobStorage
     {

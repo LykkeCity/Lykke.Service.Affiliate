@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using MongoDB.Bson.Serialization.Attributes;
@@ -19,6 +18,7 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         public string AccrualPeriodId { get; set; }
         public string ClientId { get; set; }
         public string AssetId { get; set; }
+        public decimal TradeVolume { get; set; }
         public decimal Bonus { get; set; }
         public bool Completed { get; set; }
 
@@ -27,14 +27,16 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
             return $"{accrualPeriodId}_{assetId}";
         }
 
-        public static ClientAccrualEntity Create(string accrualPeriodId, string clientId, string assetId, decimal bonus)
+        public static ClientAccrualEntity Create(string accrualPeriodId, string clientId, string assetId, decimal tradeVolume, decimal bonus)
         {
             return new ClientAccrualEntity
             {
                 BsonId = GetId(accrualPeriodId, assetId),
+                AccrualPeriodId = accrualPeriodId,
                 AssetId = assetId,
                 ClientId = clientId,
                 Bonus = bonus,
+                TradeVolume = tradeVolume,
                 MeId = Guid.NewGuid().ToString()
             };
         }
@@ -49,9 +51,9 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
             _storage = storage;
         }
 
-        public async Task<IClientAccrual> Create(string accrualPeriodId, string clientId, string assetId, decimal bonus)
+        public async Task<IClientAccrual> Create(string accrualPeriodId, string clientId, string assetId, decimal tradeVolume, decimal bonus)
         {
-            var entity = ClientAccrualEntity.Create(accrualPeriodId, clientId, assetId, bonus);
+            var entity = ClientAccrualEntity.Create(accrualPeriodId, clientId, assetId, tradeVolume, bonus);
             await _storage.InsertAsync(entity);
             return entity;
         }
@@ -68,6 +70,11 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
                 x.Completed = true;
                 return x;
             });
+        }
+
+        public async Task<IEnumerable<IClientAccrual>> GetClientAccruals(string clientId)
+        {
+            return await _storage.GetDataAsync(x => x.ClientId == clientId);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Mongo
+namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
 {
 	public class MongoBlobStorage : IMongoBlobStorage
 	{

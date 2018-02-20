@@ -62,6 +62,15 @@ namespace Lykke.Service.Affiliate.Client
             return output;
         }
 
+        public async Task<IEnumerable<StatisticItemModel>> GetStats(string clientId)
+        {
+            var result = await _affiliateApi.GetStatsAsync(clientId);
+
+            var output = _mapper.Map<IEnumerable<StatisticItemModel>>(result);
+
+            return output;
+        }
+
         public void Dispose()
         {
             _affiliateApi?.Dispose();

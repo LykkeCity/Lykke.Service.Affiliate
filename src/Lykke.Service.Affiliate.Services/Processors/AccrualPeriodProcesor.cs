@@ -44,7 +44,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
                 // if null we creating new record for bonus transfering
                 if (periodByAssetItem == null)
                 {
-                    periodByAssetItem = await _clientAccrualRepository.Create(period.Id, period.ClientId, assetId, assetGroup.Sum(x => x.Bonus));
+                    periodByAssetItem = await _clientAccrualRepository.Create(period.Id, period.ClientId, assetId, assetGroup.Sum(x => x.TradeVolume), assetGroup.Sum(x => x.Bonus));
                 }
 
                 await ProcessMeTransfer(periodByAssetItem.MeId, periodByAssetItem.ClientId, periodByAssetItem.AssetId, periodByAssetItem.Bonus);

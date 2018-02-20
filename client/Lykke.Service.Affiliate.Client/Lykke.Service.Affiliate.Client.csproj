@@ -15,14 +15,6 @@
     <PackageTags>Lykke</PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Lykke.Common" Version="4.4.2" />
@@ -30,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lykke.Service.Affiliate.Contracts\Lykke.Service.Affiliate.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Lykke.Service.Affiliate.Contracts\Lykke.Service.Affiliate.Contracts.csproj" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

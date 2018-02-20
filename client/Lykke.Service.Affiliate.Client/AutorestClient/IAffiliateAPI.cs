@@ -65,6 +65,16 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// </param>
         Task<HttpOperationResponse<LinkModel>> RegisterLinkWithHttpMessagesAsync(RegisterLinkModel model = default(RegisterLinkModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='clientId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<StatisticItemModel>>> GetStatsWithHttpMessagesAsync(string clientId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Checks service is alive
         /// </summary>

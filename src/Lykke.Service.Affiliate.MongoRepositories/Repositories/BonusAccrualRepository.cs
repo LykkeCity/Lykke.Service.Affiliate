@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using MongoDB.Bson.Serialization.Attributes;
@@ -50,7 +49,7 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 
         public async Task<IEnumerable<IBonusAccrual>> GetData(string affiliateId, DateTime startDt, DateTime endDt)
         {
-            return await _table.GetDataAsync(x => x.ClientId == affiliateId && x.CreatedDt >= startDt && x.CreatedDt < endDt);
+            return await _table.GetDataAsync(x => x.ClientId == affiliateId && x.BsonCreateDt >= startDt && x.BsonCreateDt < endDt);
         }
     }
 }

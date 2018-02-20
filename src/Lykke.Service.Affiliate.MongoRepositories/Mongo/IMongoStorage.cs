@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using MongoDB.Driver;
 
 namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
