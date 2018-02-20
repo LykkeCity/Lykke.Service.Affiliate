@@ -81,7 +81,7 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
                             {
                                 await _paidFeeQueueWriter.AddPaidFee(Guid.NewGuid(), item.Transfer.Asset,
                                                        item.Transfer.FromClientId, item.Transfer.ToClientId, (decimal)item.Transfer.Volume,
-                                                       item.Transfer.Date, queueMessage.Order.Id, trade.MarketClientId, trade.LimitClientId, (decimal)trade.MarketVolume);
+                                                       item.Transfer.Date, queueMessage.Order.Id, trade.MarketClientId, trade.LimitClientId, (decimal)trade.LimitVolume);
                             }
                             catch (Exception e)
                             {
