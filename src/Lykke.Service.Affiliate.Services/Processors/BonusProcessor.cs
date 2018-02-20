@@ -59,13 +59,24 @@ namespace Lykke.Service.Affiliate.Services.Processors
             if (period == null)
                 return;
 
-            await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser), $"AffiliateId: {affiliateId}, period: {period.Id}", "start processing period");
+            do
+            {
 
-            await _periodProcessor.Process(period);
+                await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser),
+                    $"AffiliateId: {affiliateId}, period: {period.Id}", "start processing period");
 
-            await _accrualPeriodRepository.SetCompleted(period.Id);
+                await _periodProcessor.Process(period);
 
-            await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser), $"AffiliateId: {affiliateId}, period: {period.Id}", "finish processing period");
+                await _accrualPeriodRepository.SetCompleted(period.Id);
+
+                await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser),
+                    $"AffiliateId: {affiliateId}, period: {period.Id}", "finish processing period");
+
+                period = await GetNewPeriod(affiliateId, period.EndDt);
+
+                await Task.Delay(100);
+
+            } while (period != null);
         }
 
         private async Task<IAccrualPeriod> GetNewPeriod(string affiliateId, DateTime startDt)

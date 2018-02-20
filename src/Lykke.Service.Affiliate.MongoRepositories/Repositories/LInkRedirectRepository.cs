@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using MongoDB.Bson.Serialization.Attributes;

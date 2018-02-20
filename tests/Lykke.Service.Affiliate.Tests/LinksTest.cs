@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
-using Lykke.Service.Affiliate.Core.Services;
 using Lykke.Service.Affiliate.Services;
 using Moq;
 using Xunit;

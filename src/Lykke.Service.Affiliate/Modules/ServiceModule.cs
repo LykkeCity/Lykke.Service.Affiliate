@@ -3,13 +3,13 @@ using AzureStorage.Queue;
 using Common.Log;
 using Lykke.JobTriggers.Extenstions;
 using Lykke.Service.Affiliate.AzureRepositories;
-using Lykke.Service.Affiliate.AzureRepositories.Mongo;
 using Lykke.Service.Affiliate.Core;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Azure;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
 using Lykke.Service.Affiliate.Core.Services.Managers;
 using Lykke.Service.Affiliate.Core.Services.Processors;
+using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Repositories;
 using Lykke.Service.Affiliate.RabbitSubscribers;
 using Lykke.Service.Affiliate.Services;
@@ -67,6 +67,7 @@ namespace Lykke.Service.Affiliate.Modules
 
             builder.RegisterType<AffiliateService>().As<IAffiliateService>();
             builder.RegisterType<ReferralService>().As<IReferralService>();
+            builder.RegisterType<AccrualService>().As<IAccrualService>();
 
             builder.RegisterType<LinkService>().As<ILinkService>().WithParameter(TypedParameter.From(settings.AffiliateService.AffiliateClickUrl));
 

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Utils
+namespace Lykke.Service.Affiliate.MongoRepositories.Utils
 {
 	public static class BsonDocumentExtensions
 	{

@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Mongo
+namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
 {	
 	public abstract class MongoEntity
 	{

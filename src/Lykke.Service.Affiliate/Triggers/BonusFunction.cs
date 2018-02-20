@@ -18,7 +18,7 @@ namespace Lykke.Service.Affiliate.Triggers
             _bonusProcessor = bonusProcessor;
         }
 
-        //[TimerTrigger("00:01:00")]
+        [TimerTrigger("00:01:00")]
         public async Task Process()
         {
             await _bonusProcessor.Process();

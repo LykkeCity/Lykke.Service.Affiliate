@@ -96,6 +96,32 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            public static IList<StatisticItemModel> GetStats(this IAffiliateAPI operations, string clientId = default(string))
+            {
+                return operations.GetStatsAsync(clientId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<StatisticItemModel>> GetStatsAsync(this IAffiliateAPI operations, string clientId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetStatsWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Checks service is alive
             /// </summary>

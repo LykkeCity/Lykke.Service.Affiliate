@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Lykke.Service.Affiliate.AzureRepositories.Utils;
-using Lykke.Service.Affiliate.MongoRepositories.Mongo;
+using Lykke.Service.Affiliate.MongoRepositories.Utils;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Lykke.Service.Affiliate.AzureRepositories.Mongo
+namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
 {
     public class MongoStorage<T> : IMongoStorage<T> where T : MongoEntity
     {

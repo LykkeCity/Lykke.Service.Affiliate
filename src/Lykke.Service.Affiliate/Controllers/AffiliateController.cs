@@ -20,14 +20,16 @@ namespace Lykke.Service.Affiliate.Controllers
         private readonly ILinkService _linkService;
         private readonly IReferralRepository _referralRepository;
         private readonly IClientAccountService _clientAccountService;
+        private readonly IAccrualService _accrualService;
         private readonly IMapper _mapper;
 
-        public AffiliateController(IReferralRepository referralRepository, IMapper mapper, ILinkService linkService, IClientAccountService clientAccountService)
+        public AffiliateController(IReferralRepository referralRepository, IMapper mapper, ILinkService linkService, IClientAccountService clientAccountService, IAccrualService accrualService)
         {
             _referralRepository = referralRepository;
             _mapper = mapper;
             _linkService = linkService;
             _clientAccountService = clientAccountService;
+            _accrualService = accrualService;
         }
 
         [HttpGet("referrals")]
@@ -71,6 +73,18 @@ namespace Lykke.Service.Affiliate.Controllers
             var link = await _linkService.CreateNewLink(model.ClientId, model.RedirectUrl);
 
             var result = _mapper.Map<LinkResult, LinkModel>(link);
+
+            return result;
+        }
+
+        [HttpGet("stats")]
+        [SwaggerOperation("GetStats")]
+        [ProducesResponseType(typeof(IEnumerable<StatisticItemModel>), (int)HttpStatusCode.OK)]
+        public async Task<IEnumerable<StatisticItemModel>> GetStats([FromQuery] string clientId)
+        {
+            var stats = await _accrualService.GetStats(clientId);
+
+            var result = _mapper.Map<IEnumerable<StatisticsItem>, IEnumerable<StatisticItemModel>>(stats);
 
             return result;
         }
