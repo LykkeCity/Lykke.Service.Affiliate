@@ -21,24 +21,24 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='partnerId'>
+            /// <param name='clientId'>
             /// </param>
-            public static IList<ReferralModel> GetReferrals(this IAffiliateAPI operations, string partnerId = default(string))
+            public static IList<ReferralModel> GetReferrals(this IAffiliateAPI operations, string clientId = default(string))
             {
-                return operations.GetReferralsAsync(partnerId).GetAwaiter().GetResult();
+                return operations.GetReferralsAsync(clientId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='partnerId'>
+            /// <param name='clientId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ReferralModel>> GetReferralsAsync(this IAffiliateAPI operations, string partnerId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ReferralModel>> GetReferralsAsync(this IAffiliateAPI operations, string clientId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetReferralsWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetReferralsWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -47,24 +47,24 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='partnerId'>
+            /// <param name='clientId'>
             /// </param>
-            public static IList<LinkModel> GetLinks(this IAffiliateAPI operations, string partnerId = default(string))
+            public static IList<LinkModel> GetLinks(this IAffiliateAPI operations, string clientId = default(string))
             {
-                return operations.GetLinksAsync(partnerId).GetAwaiter().GetResult();
+                return operations.GetLinksAsync(clientId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='partnerId'>
+            /// <param name='clientId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LinkModel>> GetLinksAsync(this IAffiliateAPI operations, string partnerId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LinkModel>> GetLinksAsync(this IAffiliateAPI operations, string clientId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetLinksWithHttpMessagesAsync(partnerId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLinksWithHttpMessagesAsync(clientId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

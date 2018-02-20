@@ -30,12 +30,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutorestClient\" />
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\..\src\Lykke.Service.Affiliate.Contracts\Lykke.Service.Affiliate.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Lykke.Service.Affiliate.Contracts\Lykke.Service.Affiliate.Contracts.csproj" />
+    <Folder Include="AutorestClient\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup Label="dotnet pack instructions">

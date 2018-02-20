@@ -16,17 +16,19 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 
         public string ClientId { get; set; }
         public string AssetId { get; set; }
-        public decimal Amount { get; set; }
+        public decimal TradeVolume { get; set; }
+        public decimal Bonus { get; set; }
         public string PaidFeeId { get; set; }
 
-        public static BonusAccrualEntity Create(string paidFeeId, string clientId, string assetId, decimal amount)
+        public static BonusAccrualEntity Create(string paidFeeId, string clientId, string assetId, decimal tradeVolume, decimal bonus)
         {
             return new BonusAccrualEntity
             {
                 BsonId = $"{paidFeeId}_{clientId}",
                 PaidFeeId = paidFeeId,
                 ClientId = clientId,
-                Amount = amount,
+                TradeVolume = tradeVolume,
+                Bonus = bonus,
                 AssetId = assetId
             };
         }
@@ -41,9 +43,9 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
             _table = table;
         }
 
-        public Task Create(string paidFeeId, string clientId, string assetId, decimal amount)
+        public Task Create(string paidFeeId, string clientId, string assetId, decimal tradeVolume, decimal bonus)
         {
-            return _table.InsertOrReplaceAsync(BonusAccrualEntity.Create(paidFeeId, clientId, assetId, amount));
+            return _table.InsertOrReplaceAsync(BonusAccrualEntity.Create(paidFeeId, clientId, assetId, tradeVolume, bonus));
         }
 
         public async Task<IEnumerable<IBonusAccrual>> GetData(string affiliateId, DateTime startDt, DateTime endDt)

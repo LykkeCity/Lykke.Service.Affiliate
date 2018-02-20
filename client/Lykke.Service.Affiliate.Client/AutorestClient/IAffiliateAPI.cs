@@ -35,7 +35,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         JsonSerializerSettings DeserializationSettings { get; }
 
 
-        /// <param name='partnerId'>
+        /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,9 +43,9 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<ReferralModel>>> GetReferralsWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ReferralModel>>> GetReferralsWithHttpMessagesAsync(string clientId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='partnerId'>
+        /// <param name='clientId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,7 +53,7 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<LinkModel>>> GetLinksWithHttpMessagesAsync(string partnerId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LinkModel>>> GetLinksWithHttpMessagesAsync(string clientId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='model'>
         /// </param>

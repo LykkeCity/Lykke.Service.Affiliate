@@ -75,7 +75,7 @@
             </summary>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.GetReferralsWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='customHeaders'>
             Headers that will be added to request.
@@ -94,7 +94,7 @@
             </return>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPI.GetLinksWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='customHeaders'>
             Headers that will be added to request.
@@ -160,14 +160,14 @@
             <param name='operations'>
             The operations group for this extension method.
             </param>
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.GetReferralsAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String,System.Threading.CancellationToken)">
             <param name='operations'>
             The operations group for this extension method.
             </param>
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='cancellationToken'>
             The cancellation token.
@@ -177,14 +177,14 @@
             <param name='operations'>
             The operations group for this extension method.
             </param>
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.AffiliateAPIExtensions.GetLinksAsync(Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI,System.String,System.Threading.CancellationToken)">
             <param name='operations'>
             The operations group for this extension method.
             </param>
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='cancellationToken'>
             The cancellation token.
@@ -246,7 +246,7 @@
             </summary>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.GetReferralsWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='customHeaders'>
             The headers that will be added to request.
@@ -256,7 +256,7 @@
             </param>
         </member>
         <member name="M:Lykke.Service.Affiliate.Client.AutorestClient.IAffiliateAPI.GetLinksWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
-            <param name='partnerId'>
+            <param name='clientId'>
             </param>
             <param name='customHeaders'>
             The headers that will be added to request.
@@ -414,7 +414,7 @@
             Initializes a new instance of the RegisterLinkModel class.
             </summary>
         </member>
-        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.PartnerId">
+        <member name="P:Lykke.Service.Affiliate.Client.AutorestClient.Models.RegisterLinkModel.ClientId">
             <summary>
             </summary>
         </member>
