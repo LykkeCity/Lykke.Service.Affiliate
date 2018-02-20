@@ -29,7 +29,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
         public async Task Process()
         {
             var affiliates = await _affiliateService.GetAllAffiliates();
-            
+
             foreach (var affiliate in affiliates)
             {
                 try
@@ -45,35 +45,38 @@ namespace Lykke.Service.Affiliate.Services.Processors
 
         public async Task ProcessOneUser(string affiliateId)
         {
-            var lastEndDt = await CalcLastEndDate(affiliateId);
-            if (lastEndDt == null)
+            var period = await _accrualPeriodRepository.GetLastPeriod(affiliateId);
+
+            if (period == null)
+            {
+                period = await GetNewPeriod(affiliateId, DateTime.UtcNow.Date + _periodOffset);
+            }
+            else if (period.Completed)
+            {
+                period = await GetNewPeriod(affiliateId, period.EndDt);
+            }
+
+            if (period == null)
                 return;
 
-            var startDt = lastEndDt.Value;
-            var endDt = startDt + _period;
-
-            var period = await _accrualPeriodRepository.CreatePeriod(affiliateId, startDt, endDt);
+            await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser), $"AffiliateId: {affiliateId}, period: {period.Id}", "start processing period");
 
             await _periodProcessor.Process(period);
 
             await _accrualPeriodRepository.SetCompleted(period.Id);
+
+            await _logger.WriteInfoAsync(nameof(BonusProcessor), nameof(ProcessOneUser), $"AffiliateId: {affiliateId}, period: {period.Id}", "finish processing period");
         }
 
-
-        private async Task<DateTime?> CalcLastEndDate(string affiliateId)
+        private async Task<IAccrualPeriod> GetNewPeriod(string affiliateId, DateTime startDt)
         {
-            var period = await _accrualPeriodRepository.GetLastPeriod(affiliateId);
-            if (period != null)
-                return period.EndDt;
+            var newEnd = startDt + _period;
 
-            var newStart = DateTime.UtcNow.Date + _periodOffset;
-            var newEnd = newStart + _period;
-
-            // new period is not finished
+            // new period no finished yet
             if (newEnd > DateTime.UtcNow)
                 return null;
 
-            return newStart;
+            return await _accrualPeriodRepository.CreatePeriod(affiliateId, startDt, newEnd);
         }
     }
 }
