@@ -11,5 +11,6 @@ namespace Lykke.Service.Affiliate.Settings
         public SlackNotificationsSettings SlackNotifications { get; set; }
         public ClientAccountServiceClientSettings ClientAccountServiceClient { get; set; }
         public ExchangeOperationsServiceClientSettings ExchangeOperationsServiceClient { get; set; }
+        public FeeSettings FeeSettings { get; set; }
     }
 }
