@@ -8,6 +8,7 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
         string AffiliateId { get; }
         string Ip { get; }
         string LinkId { get; }
+        DateTime ExpirationDt { get; }
     }
 
     public interface ILinkRedirectRepository

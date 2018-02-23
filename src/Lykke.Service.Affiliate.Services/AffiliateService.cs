@@ -33,14 +33,14 @@ namespace Lykke.Service.Affiliate.Services
         {
             var record = await _linkRedirectRepository.GetRedirect(ip);
 
-            if (record == null)
+            if (record == null || DateTime.UtcNow > record.ExpirationDt)
                 return;
 
             var item = await _referralRepository.SaveReferral(clientId, record.AffiliateId);
 
             _memoryCache.Set(Constants.GetCacheReferralKey(clientId), item);
 
-            await _logger.WriteInfoAsync(nameof(AffiliateService), nameof(Register), $"New referral {clientId} for {record.AffiliateId} registered");
+            await _logger.WriteInfoAsync(nameof(AffiliateService), nameof(Register), $"New referral {clientId} for {record.AffiliateId} registered. (Link expiration {record.ExpirationDt}");
         }
 
         public async Task<IEnumerable<string>> GetAllAffiliates()
