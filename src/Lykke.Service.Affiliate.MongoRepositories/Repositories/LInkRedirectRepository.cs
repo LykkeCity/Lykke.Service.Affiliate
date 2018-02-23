@@ -11,15 +11,17 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         [BsonIgnore]
         public string Ip => BsonId;
         public string LinkId { get; set; }
+        public DateTime ExpirationDt { get; set; }
         public string AffiliateId { get; set; }
 
-        public static LinkRedirectEntity Create(string ip, string affiliateId, string linkId)
+        public static LinkRedirectEntity Create(string ip, string affiliateId, string linkId, DateTime expirationDt)
         {
             return new LinkRedirectEntity
             {
                 AffiliateId = affiliateId,
                 BsonId = ip,
-                LinkId = linkId
+                LinkId = linkId,
+                ExpirationDt = expirationDt
             };
         }
     }
@@ -35,13 +37,15 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
 
         public Task SaveRedirect(string ip, string affiliateId, string linkId, TimeSpan ipCache)
         {
-            return _table.InsertOrModifyAsync(ip, () => LinkRedirectEntity.Create(ip, affiliateId, linkId), (entity) =>
+            var expirationDt = DateTime.UtcNow + ipCache;
+            return _table.InsertOrModifyAsync(ip, () => LinkRedirectEntity.Create(ip, affiliateId, linkId, expirationDt), (entity) =>
             {
-                if (DateTime.UtcNow - entity.BsonCreateDt < ipCache)
+                if (DateTime.UtcNow < entity.ExpirationDt)
                     return null;
 
                 entity.AffiliateId = affiliateId;
                 entity.LinkId = linkId;
+                entity.ExpirationDt = expirationDt;
 
                 return entity;
             });
