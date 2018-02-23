@@ -91,7 +91,7 @@ namespace Lykke.Service.Affiliate.Modules
         private void RegisterProcessors(ContainerBuilder builder)
         {
             builder.RegisterType<AccrualPeriodProcesor>().As<IAccrualPeriodProcesor>()
-                .WithParameter("feeClientId", _settings.CurrentValue.AffiliateService.FeeClientId);
+                .WithParameter("feeClientId", _settings.CurrentValue.FeeSettings.TargetClientId.Affiliate);
 
             builder.RegisterType<BonusProcessor>().As<IBonusProcessor>()
                 .WithParameter("period", _settings.CurrentValue.AffiliateService.AccrualPeriodSettings.Period)
