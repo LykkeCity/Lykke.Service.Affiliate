@@ -117,6 +117,8 @@ namespace Lykke.Service.Affiliate.Modules
             builder.RegisterInstance(new ClientAccrualRepository(new MongoStorage<ClientAccrualEntity>(mongoClient, "ClientAccruals"))).As<IClientAccrualRepository>();
 
             builder.RegisterInstance(new AccrualPeriodRepository(new MongoStorage<AccrualPeriodEntity>(mongoClient, "AccrualPeriods"))).As<IAccrualPeriodRepository>();
+
+            builder.RegisterInstance(new DisabledAssetRepository(new MongoStorage<DisabledAssetEntity>(mongoClient, "DisabledAssets"))).As<IDisabledAssetRepository>();
         }
 
         private void BindQueue(ContainerBuilder builder)
