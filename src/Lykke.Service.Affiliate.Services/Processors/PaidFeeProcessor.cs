@@ -37,6 +37,10 @@ namespace Lykke.Service.Affiliate.Services.Processors
             await _paidFeeRepository.Create(paidFeeId, item.AssetId, item.FromClient, item.ToClient, item.Volume,
                 item.Order, item.TradeClient, item.TradeOppositeClient, item.TradeVolume);
 
+            // do not process disabled assets
+            if (_memoryCache.Get<IDisabledAsset>(Constants.GetCacheDisabledAssetKey(item.AssetId)) != null)
+                return;
+
             var clientAffiliate = GetAffiliate(await GetClientId(item.TradeClient));
             var oppositeClientAffiliate = GetAffiliate(await GetClientId(item.TradeOppositeClient));
 

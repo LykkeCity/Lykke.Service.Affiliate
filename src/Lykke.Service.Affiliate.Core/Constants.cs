@@ -12,5 +12,10 @@ namespace Lykke.Service.Affiliate.Core
         {
             return $"Referral_{referralId}";
         }
+
+        public static string GetCacheDisabledAssetKey(string assetId)
+        {
+            return $"DisabledAsset_{assetId}";
+        }
     }
 }

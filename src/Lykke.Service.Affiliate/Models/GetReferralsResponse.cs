@@ -9,10 +9,4 @@ namespace Lykke.Service.Affiliate.Models
     {
         public IEnumerable<ReferralModel> Referrals { get; set; }
     }
-
-    //public class ReferralModel
-    //{
-    //    public string Id { get; set; }
-    //    public DateTime CreatedDt { get; set; }
-    //}
 }
