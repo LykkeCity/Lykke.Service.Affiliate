@@ -10,6 +10,14 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
     public class DisabledAssetEntity : MongoEntity, IDisabledAsset
     {
         public string AssetId => BsonId;
+
+        public static DisabledAssetEntity Create(string assetId)
+        {
+            return new DisabledAssetEntity
+            {
+                BsonId = assetId
+            };
+        }
     }
 
     public class DisabledAssetRepository : IDisabledAssetRepository
@@ -21,9 +29,21 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
             _storage = storage;
         }
 
-        public async Task<IEnumerable<IDisabledAsset>> GetDisabledAssets()
+        public async Task<IEnumerable<IDisabledAsset>> GetAll()
         {
             return await _storage.GetDataAsync();
+        }
+
+        public async Task<IDisabledAsset> CreateAsync(string assetId)
+        {
+            var item = DisabledAssetEntity.Create(assetId);
+            await _storage.InsertOrReplaceAsync(item);
+            return item;
+        }
+
+        public Task DeleteAsync(string assetId)
+        {
+            return _storage.DeleteAsync(assetId);
         }
     }
 }

@@ -13,6 +13,8 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
 
     public interface IDisabledAssetRepository
     {
-        Task<IEnumerable<IDisabledAsset>> GetDisabledAssets();
+        Task<IEnumerable<IDisabledAsset>> GetAll();
+        Task<IDisabledAsset> CreateAsync(string assetId);
+        Task DeleteAsync(string assetId);
     }
 }

@@ -39,7 +39,7 @@ namespace Lykke.Service.Affiliate.Services.Managers
                 _memoryCache.Set(Constants.GetCacheReferralKey(item.ReferralId), item);
             }
 
-            var disabledAssets = await _disabledAssetRepository.GetDisabledAssets();
+            var disabledAssets = await _disabledAssetRepository.GetAll();
 
             foreach (var item in disabledAssets)
             {
