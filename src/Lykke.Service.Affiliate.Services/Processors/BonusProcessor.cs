@@ -49,7 +49,8 @@ namespace Lykke.Service.Affiliate.Services.Processors
 
             if (period == null)
             {
-                period = await GetNewPeriod(affiliateId, DateTime.UtcNow.Date + _periodOffset);
+                // set initial period as previous one
+                period = await GetNewPeriod(affiliateId, DateTime.UtcNow.Date + _periodOffset - _period);
             }
             else if (period.Completed)
             {
