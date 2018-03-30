@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
@@ -24,5 +21,6 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
         Task<IClientAccrual> GetClientAccrual(string accrualPeriodId, string asset);
         Task SetCompleted(string id);
         Task<IEnumerable<IClientAccrual>> GetClientAccruals(string clientId);
+        Task<IEnumerable<IClientAccrual>> GetClientAccruals();
     }
 }

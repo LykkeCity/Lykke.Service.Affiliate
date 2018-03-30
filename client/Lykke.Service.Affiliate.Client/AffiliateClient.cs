@@ -71,6 +71,38 @@ namespace Lykke.Service.Affiliate.Client
             return output;
         }
 
+        public async Task<int> GetAffiliatesCountAsync()
+        {
+            var result = await _affiliateApi.GetAffiliatesCountAsync();
+
+            return result ?? 0;
+        }
+
+        public async Task<int> GetReferralsCountAsync()
+        {
+            var result = await _affiliateApi.GetReferralsCountAsync();
+
+            return result ?? 0;
+        }
+
+        public async Task<IEnumerable<StatisticItemModel>> GetSummaryStatsAsync()
+        {
+            var result = await _affiliateApi.GetSummaryStatsAsync();
+
+            var output = _mapper.Map<IEnumerable<StatisticItemModel>>(result);
+
+            return output;
+        }
+
+        public async Task<IEnumerable<StatisticItemModel>> GetSummaryStatsForPeriodAsync(DateTime startDate, DateTime endDate)
+        {
+            var result = await _affiliateApi.GetSummaryStatsForPeriodAsync(startDate, endDate);
+
+            var output = _mapper.Map<IEnumerable<StatisticItemModel>>(result);
+
+            return output;
+        }
+
         public void Dispose()
         {
             _affiliateApi?.Dispose();

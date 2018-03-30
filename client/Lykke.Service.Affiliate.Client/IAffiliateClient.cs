@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lykke.Service.Affiliate.Contracts;
@@ -35,6 +36,31 @@ namespace Lykke.Service.Affiliate.Client
         /// <param name="clientId"></param>
         /// <returns></returns>
         Task<IEnumerable<StatisticItemModel>> GetStats(string clientId);
-
+        
+        /// <summary>
+        /// Get total affiliates count
+        /// </summary>
+        /// <returns></returns>
+        Task<int> GetAffiliatesCountAsync();
+        
+        /// <summary>
+        /// Get total referrals count
+        /// </summary>
+        /// <returns></returns>
+        Task<int> GetReferralsCountAsync();
+        
+        /// <summary>
+        /// Get total bonus statistics
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<StatisticItemModel>> GetSummaryStatsAsync();
+        
+        /// <summary>
+        /// Get total bonus statistics for a period
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        Task<IEnumerable<StatisticItemModel>> GetSummaryStatsForPeriodAsync(DateTime startDate, DateTime endDate);
     }
 }

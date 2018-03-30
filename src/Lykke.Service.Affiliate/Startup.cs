@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Lykke.Service.Affiliate
 {
@@ -68,6 +69,12 @@ namespace Lykke.Service.Affiliate
                 services.AddSwaggerGen(options =>
                 {
                     options.DefaultLykkeConfiguration("v1", "Affiliate API");
+                    options.MakeResponseValueTypesRequired();
+                    options.MapType<decimal>(() => new Schema
+                    {
+                        Type = "number",
+                        Format = "decimal"
+                    });
                 });
 
                 var builder = new ContainerBuilder();

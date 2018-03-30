@@ -68,6 +68,7 @@ namespace Lykke.Service.Affiliate.Modules
             builder.RegisterType<AffiliateService>().As<IAffiliateService>();
             builder.RegisterType<ReferralService>().As<IReferralService>();
             builder.RegisterType<AccrualService>().As<IAccrualService>();
+            builder.RegisterType<SummaryStatsService>().As<ISummaryStatsService>();
 
             builder.RegisterType<LinkService>().As<ILinkService>().WithParameter(TypedParameter.From(settings.AffiliateService.AffiliateClickUrl));
 

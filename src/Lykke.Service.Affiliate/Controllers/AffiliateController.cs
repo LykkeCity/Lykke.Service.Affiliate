@@ -18,30 +18,56 @@ namespace Lykke.Service.Affiliate.Controllers
     public class AffiliateController : Controller
     {
         private readonly ILinkService _linkService;
-        private readonly IReferralRepository _referralRepository;
+        private readonly IReferralService _referralService;
         private readonly IClientAccountService _clientAccountService;
         private readonly IAccrualService _accrualService;
+        private readonly IAffiliateService _affiliateService;
         private readonly IMapper _mapper;
 
-        public AffiliateController(IReferralRepository referralRepository, IMapper mapper, ILinkService linkService, IClientAccountService clientAccountService, IAccrualService accrualService)
+        public AffiliateController(
+            IReferralService referralService, 
+            IMapper mapper, 
+            ILinkService linkService, 
+            IClientAccountService clientAccountService, 
+            IAccrualService accrualService,
+            IAffiliateService affiliateService)
         {
-            _referralRepository = referralRepository;
+            _referralService = referralService;
             _mapper = mapper;
             _linkService = linkService;
             _clientAccountService = clientAccountService;
             _accrualService = accrualService;
+            _affiliateService = affiliateService;
         }
 
+        [HttpGet("count")]
+        [SwaggerOperation("GetAffiliatesCount")]
+        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+        public async Task<int> GetAffiliatesCount()
+        {
+            var count = (await _affiliateService.GetAllAffiliates()).Count();
+            return count;
+        }
+        
         [HttpGet("referrals")]
         [SwaggerOperation("GetReferrals")]
         [ProducesResponseType(typeof(IEnumerable<ReferralModel>), (int)HttpStatusCode.OK)]
         public async Task<IEnumerable<ReferralModel>> GetReferrals([FromQuery]string clientId)
         {
-            var referrals = await _referralRepository.GetReferrals(clientId);
+            var referrals = await _referralService.GetReferralsAsync(clientId);
 
             var result = _mapper.Map<IEnumerable<IReferral>, IEnumerable<ReferralModel>>(referrals);
 
             return result;
+        }
+        
+        [HttpGet("referrals/count")]
+        [SwaggerOperation("GetReferralsCount")]
+        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+        public async Task<int> GetReferralsCount()
+        {
+            var count = await _referralService.GetReferralsCountAsync();
+            return count;
         }
 
         [HttpGet("links")]
