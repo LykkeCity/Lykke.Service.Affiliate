@@ -32,7 +32,7 @@ namespace Lykke.Service.Affiliate.Services.Managers
 
         public async Task StartAsync()
         {
-            var referrals = await _referralService.GetAllReferrals();
+            var referrals = await _referralService.GetAllReferralsAsync();
 
             foreach (var item in referrals)
             {

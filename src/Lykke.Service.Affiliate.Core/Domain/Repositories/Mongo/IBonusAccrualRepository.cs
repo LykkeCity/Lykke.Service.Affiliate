@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
@@ -19,5 +18,6 @@ namespace Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo
     {
         Task Create(string paidFeeId, string clientId, string assetId, decimal tradeVolume, decimal bonus);
         Task<IEnumerable<IBonusAccrual>> GetData(string affiliateId, DateTime startDt, DateTime endDt);
+        Task<IEnumerable<IBonusAccrual>> GetData(DateTime startDt, DateTime endDt);
     }
 }

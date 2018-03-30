@@ -51,5 +51,10 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         {
             return await _table.GetDataAsync(x => x.ClientId == affiliateId && x.BsonCreateDt >= startDt && x.BsonCreateDt < endDt);
         }
+
+        public async Task<IEnumerable<IBonusAccrual>> GetData(DateTime startDt, DateTime endDt)
+        {
+            return await _table.GetDataAsync(x => x.BsonCreateDt >= startDt && x.BsonCreateDt < endDt);
+        }
     }
 }

@@ -76,5 +76,10 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Repositories
         {
             return await _storage.GetDataAsync(x => x.ClientId == clientId);
         }
+
+        public async Task<IEnumerable<IClientAccrual>> GetClientAccruals()
+        {
+            return await _storage.GetDataAsync();
+        }
     }
 }

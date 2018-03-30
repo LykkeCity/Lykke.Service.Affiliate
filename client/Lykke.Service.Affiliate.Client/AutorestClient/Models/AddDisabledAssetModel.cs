@@ -9,23 +9,22 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class LinkModel
+    public partial class AddDisabledAssetModel
     {
         /// <summary>
-        /// Initializes a new instance of the LinkModel class.
+        /// Initializes a new instance of the AddDisabledAssetModel class.
         /// </summary>
-        public LinkModel()
+        public AddDisabledAssetModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LinkModel class.
+        /// Initializes a new instance of the AddDisabledAssetModel class.
         /// </summary>
-        public LinkModel(string url = default(string), string redirectUrl = default(string))
+        public AddDisabledAssetModel(string assetId = default(string))
         {
-            Url = url;
-            RedirectUrl = redirectUrl;
+            AssetId = assetId;
             CustomInit();
         }
 
@@ -36,13 +35,8 @@ namespace Lykke.Service.Affiliate.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Url")]
-        public string Url { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "RedirectUrl")]
-        public string RedirectUrl { get; set; }
+        [JsonProperty(PropertyName = "AssetId")]
+        public string AssetId { get; set; }
 
     }
 }
