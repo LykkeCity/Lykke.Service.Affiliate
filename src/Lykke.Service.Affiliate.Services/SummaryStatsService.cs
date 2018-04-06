@@ -24,16 +24,31 @@ namespace Lykke.Service.Affiliate.Services
         {
             IEnumerable<IClientAccrual> data = await _clientAccrualRepository.GetClientAccruals();
             
-            IEnumerable<StatisticsItem> result =  data.GroupBy(x => x.AssetId).Select(x => new StatisticsItem
+            List<StatisticsItem> result =  data.GroupBy(x => x.AssetId).Select(x => new StatisticsItem
             {
                 AssetId = x.Key,
                 BonusVolume = x.Sum(o => o.Bonus),
                 TradeVolume = x.Sum(o => o.TradeVolume)
-            });
+            }).ToList();
 
             var todayBonuses = await GetSummaryStatsAsync(DateTime.UtcNow.Date, DateTime.UtcNow.Date.AddDays(1));
 
-            return result.Concat(todayBonuses).OrderBy(item => item.AssetId);
+            foreach (var bonus in todayBonuses)
+            {
+                var existing = result.FirstOrDefault(item => item.AssetId == bonus.AssetId);
+
+                if (existing != null)
+                {
+                    existing.BonusVolume += bonus.BonusVolume;
+                    existing.TradeVolume += bonus.TradeVolume;
+                }
+                else
+                {
+                    result.Add(bonus);
+                }
+            }
+            
+            return result.OrderBy(item => item.AssetId);
         }
 
         public async Task<IEnumerable<StatisticsItem>> GetSummaryStatsAsync(DateTime startDate, DateTime endDate)
