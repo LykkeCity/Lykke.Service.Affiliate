@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Service.Affiliate.Core;
-using Lykke.Service.Affiliate.Core.Domain.Repositories;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
 using Microsoft.Extensions.Caching.Memory;
@@ -45,7 +43,7 @@ namespace Lykke.Service.Affiliate.Services
 
         public async Task<IEnumerable<string>> GetAllAffiliates()
         {
-            var data = await _linkRepository.GetAllLinks();
+            var data = await _referralRepository.GetAllReferrals();
 
             return data.Select(x => x.AffiliateId).Distinct();
         }
