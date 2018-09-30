@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
+using Lykke.Common.Log;
+using Lykke.JobTriggers.Triggers;
+using Lykke.Sdk;
 using Lykke.Service.Affiliate.Core;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
-using Lykke.Service.Affiliate.Core.Services.Managers;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Lykke.Service.Affiliate.Services.Managers
@@ -21,13 +23,21 @@ namespace Lykke.Service.Affiliate.Services.Managers
         private readonly IMemoryCache _memoryCache;
         private readonly IReferralService _referralService;
         private readonly IDisabledAssetRepository _disabledAssetRepository;
+        private readonly TriggerHost _triggerHost;
 
-        public StartupManager(ILog log, IMemoryCache memoryCache, IReferralService referralService, IDisabledAssetRepository disabledAssetRepository)
+        public StartupManager(
+            ILogFactory logFactory, 
+            IMemoryCache memoryCache, 
+            IReferralService referralService, 
+            IDisabledAssetRepository disabledAssetRepository,
+            TriggerHost triggerHost
+            )
         {
-            _log = log;
+            _log = logFactory.CreateLog(this);
             _memoryCache = memoryCache;
             _referralService = referralService;
             _disabledAssetRepository = disabledAssetRepository;
+            _triggerHost = triggerHost;
         }
 
         public async Task StartAsync()
@@ -45,6 +55,8 @@ namespace Lykke.Service.Affiliate.Services.Managers
             {
                 _memoryCache.Set(Constants.GetCacheDisabledAssetKey(item.AssetId), item);
             }
+
+            await _triggerHost.Start();
 
             await Task.CompletedTask;
         }

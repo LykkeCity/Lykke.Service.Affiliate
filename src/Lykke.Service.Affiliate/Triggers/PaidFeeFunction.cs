@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Lykke.JobTriggers.Triggers.Attributes;
 using Lykke.Service.Affiliate.Core;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Azure;

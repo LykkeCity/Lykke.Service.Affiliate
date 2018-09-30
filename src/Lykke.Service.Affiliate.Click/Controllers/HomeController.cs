@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Extensions;
+using Lykke.Common.Log;
 using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,18 @@ namespace Lykke.Service.Affiliate.Click.Controllers
         private readonly ILinkRepository _linkRepository;
         private readonly ILinkRedirectRepository _linkRedirectRepository;
         private readonly RedirectIpCacheSetting _setting;
-        private readonly ILog _logger;
+        private readonly ILog _log;
 
-        public HomeController(ILinkRepository linkRepository, ILinkRedirectRepository linkRedirectRepository, RedirectIpCacheSetting setting, ILog logger)
+        public HomeController(
+            ILinkRepository linkRepository, 
+            ILinkRedirectRepository linkRedirectRepository, 
+            RedirectIpCacheSetting setting, 
+            ILogFactory logFactory)
         {
             _linkRepository = linkRepository;
             _linkRedirectRepository = linkRedirectRepository;
             _setting = setting;
-            _logger = logger;
+            _log = logFactory.CreateLog(this);
         }
 
         [HttpGet("{key}")]
@@ -33,20 +38,20 @@ namespace Lykke.Service.Affiliate.Click.Controllers
             if (redirectLink == null)
                 return NotFound();
 
-            await LogHeaders();
+            LogHeaders();
 
             await _linkRedirectRepository.SaveRedirect(HttpContext.GetIp(), redirectLink.AffiliateId, key, _setting.IpCacheTime);
 
             return Redirect(redirectLink.RedirectUrl);
         }
 
-        private async Task LogHeaders()
+        private void LogHeaders()
         {
             try
             {
                 var values = string.Join(",", HttpContext.Request.Headers.Values.Select(x => x.ToString()));
                 var keys = string.Join(",", HttpContext.Request.Headers.Keys);
-                await _logger.WriteInfoAsync(nameof(RegisterLink), values, keys);
+                _log.Info(nameof(RegisterLink), values, keys);
             }
             // ReSharper disable once EmptyGeneralCatchClause
             catch (System.Exception)

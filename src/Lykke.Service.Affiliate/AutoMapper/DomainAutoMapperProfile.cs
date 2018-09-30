@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Lykke.Service.Affiliate.Contracts;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
-using Lykke.Service.Affiliate.Models;
-using Newtonsoft.Json.Linq;
 
 namespace Lykke.Service.Affiliate.AutoMapper
 {

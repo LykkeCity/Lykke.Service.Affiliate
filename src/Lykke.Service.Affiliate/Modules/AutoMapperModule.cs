@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Autofac;
 using AutoMapper;
 using Lykke.Service.Affiliate.AutoMapper;
@@ -13,6 +11,7 @@ namespace Lykke.Service.Affiliate.Modules
         {
             builder.RegisterType<DomainAutoMapperProfile>()
                 .As<Profile>();
+            
             builder.Register(c => new MapperConfiguration(cfg =>
             {
                 foreach (var profile in c.Resolve<IEnumerable<Profile>>())

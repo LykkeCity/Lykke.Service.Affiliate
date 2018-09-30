@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
+using Lykke.Common.Log;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services.Processors;
 using Lykke.Service.ExchangeOperations.Client;
@@ -14,15 +15,15 @@ namespace Lykke.Service.Affiliate.Services.Processors
         private readonly IClientAccrualRepository _clientAccrualRepository;
         private readonly IBonusAccrualRepository _bonusAccrualRepository;
         private readonly IExchangeOperationsServiceClient _exchangeOperationsServiceClient;
-        private readonly ILog _logger;
+        private readonly ILog _log;
 
-        public AccrualPeriodProcesor(string feeClientId, IClientAccrualRepository clientAccrualRepository, IBonusAccrualRepository bonusAccrualRepository, IExchangeOperationsServiceClient exchangeOperationsServiceClient, ILog logger)
+        public AccrualPeriodProcesor(string feeClientId, IClientAccrualRepository clientAccrualRepository, IBonusAccrualRepository bonusAccrualRepository, IExchangeOperationsServiceClient exchangeOperationsServiceClient, ILogFactory logFactory)
         {
             _feeClientId = feeClientId;
             _clientAccrualRepository = clientAccrualRepository;
             _bonusAccrualRepository = bonusAccrualRepository;
             _exchangeOperationsServiceClient = exchangeOperationsServiceClient;
-            _logger = logger;
+            _log = logFactory.CreateLog(this);
         }
 
         public async Task Process(IAccrualPeriod period)
@@ -41,7 +42,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
                     continue;
                 }
 
-                // if null we creating new record for bonus transfering
+                // if null we creating new record for bonus transferring
                 if (periodByAssetItem == null)
                 {
                     periodByAssetItem = await _clientAccrualRepository.Create(period.Id, period.ClientId, assetId, assetGroup.Sum(x => x.TradeVolume), assetGroup.Sum(x => x.Bonus));
@@ -62,8 +63,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
 
             if (result.IsDuplicated())
             {
-                await _logger.WriteWarningAsync(nameof(AccrualPeriodProcesor), nameof(ProcessMeTransfer),
-                    $"Client: {clientId}, id: {id}", "Me returned duplicated error");
+                _log.Warning(nameof(ProcessMeTransfer), "Me returned duplicated error", null,  $"Client: {clientId}, id: {id}");
                 return;
             }
 

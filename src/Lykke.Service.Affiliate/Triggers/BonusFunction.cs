@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Lykke.JobTriggers.Triggers.Attributes;
-using Lykke.Service.Affiliate.Core.Services;
 using Lykke.Service.Affiliate.Core.Services.Processors;
 
 namespace Lykke.Service.Affiliate.Triggers
 {
-
     public class BonusFunction
     {
         private readonly IBonusProcessor _bonusProcessor;
