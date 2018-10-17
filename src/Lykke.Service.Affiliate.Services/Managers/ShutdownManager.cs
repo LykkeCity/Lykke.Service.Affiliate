@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Common;
 using Common.Log;
-using Lykke.Service.Affiliate.Core.Services.Managers;
+using Lykke.Common.Log;
+using Lykke.JobTriggers.Triggers;
+using Lykke.Sdk;
 
 namespace Lykke.Service.Affiliate.Services.Managers
 {
@@ -11,16 +15,26 @@ namespace Lykke.Service.Affiliate.Services.Managers
     
     public class ShutdownManager : IShutdownManager
     {
+        private readonly IEnumerable<IStopable> _stopables;
+        private readonly TriggerHost _triggerHost;
         private readonly ILog _log;
 
-        public ShutdownManager(ILog log)
+        public ShutdownManager(
+            ILogFactory logFactory,
+            IEnumerable<IStopable> stopables,
+            TriggerHost triggerHost)
         {
-            _log = log;
+            _stopables = stopables;
+            _triggerHost = triggerHost;
+            _log = logFactory.CreateLog(this);
         }
 
         public async Task StopAsync()
         {
-            // TODO: Implement your shutdown logic here. Good idea is to log every step
+            foreach (var stopable in _stopables)
+                stopable.Stop();
+            
+            _triggerHost.Cancel();
 
             await Task.CompletedTask;
         }

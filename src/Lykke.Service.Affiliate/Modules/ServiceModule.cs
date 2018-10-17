@@ -1,13 +1,15 @@
 ﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AzureStorage.Queue;
-using Common.Log;
+using Common;
 using Lykke.JobTriggers.Extenstions;
+using Lykke.JobTriggers.Triggers;
+using Lykke.Sdk;
 using Lykke.Service.Affiliate.AzureRepositories;
 using Lykke.Service.Affiliate.Core;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Azure;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services;
-using Lykke.Service.Affiliate.Core.Services.Managers;
 using Lykke.Service.Affiliate.Core.Services.Processors;
 using Lykke.Service.Affiliate.MongoRepositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Repositories;
@@ -16,6 +18,7 @@ using Lykke.Service.Affiliate.Services;
 using Lykke.Service.Affiliate.Services.Managers;
 using Lykke.Service.Affiliate.Services.Processors;
 using Lykke.Service.Affiliate.Settings;
+using Lykke.Service.Assets.Client;
 using Lykke.Service.ClientAccount.Client;
 using Lykke.Service.ExchangeOperations.Client;
 using Lykke.SettingsReader;
@@ -26,32 +29,22 @@ namespace Lykke.Service.Affiliate.Modules
     public class ServiceModule : Module
     {
         private readonly IReloadingManager<AppSettings> _settings;
-        private readonly ILog _log;
 
-        public ServiceModule(IReloadingManager<AppSettings> settings, ILog log)
+        public ServiceModule(IReloadingManager<AppSettings> settings)
         {
             _settings = settings;
-            _log = log;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            // TODO: Do not register entire settings in container, pass necessary settings to services which requires them
-            // ex:
-            //  builder.RegisterType<QuotesPublisher>()
-            //      .As<IQuotesPublisher>()
-            //      .WithParameter(TypedParameter.From(_settings.CurrentValue.QuotesPublication))
             var settings = _settings.CurrentValue;
 
-            builder.RegisterInstance(settings.AffiliateService.RabbitMe);
-            builder.RegisterInstance(settings.AffiliateService.RabbitRegistration);
-
-            builder.RegisterInstance(_log)
-                .As<ILog>()
-                .SingleInstance();
-
-            builder.RegisterType<HealthService>()
-                .As<IHealthService>()
+            builder.Register(ctx =>
+                {
+                    var scope = ctx.Resolve<ILifetimeScope>();
+                    var host = new TriggerHost(new AutofacServiceProvider(scope));
+                    return host;
+                }).As<TriggerHost>()
                 .SingleInstance();
 
             builder.RegisterType<StartupManager>()
@@ -79,14 +72,33 @@ namespace Lykke.Service.Affiliate.Modules
 
             builder.RegisterLykkeServiceClient(settings.ClientAccountServiceClient.ServiceUrl);
 
-            builder.RegisterInstance(new ExchangeOperationsServiceClient(settings.ExchangeOperationsServiceClient.ServiceUrl)).As<IExchangeOperationsServiceClient>().SingleInstance();
+            builder.RegisterInstance(new ExchangeOperationsServiceClient(settings.ExchangeOperationsServiceClient.ServiceUrl))
+                .As<IExchangeOperationsServiceClient>()
+                .SingleInstance();
+            
+            builder.RegisterAssetsClient(_settings.CurrentValue.AssetsServiceClient);
         }
 
         private void RegisterRabbitMqSubscribers(ContainerBuilder builder)
         {
-            builder.RegisterType<RegistrationSubscriber>().SingleInstance();
-            builder.RegisterType<LimitTradeSubscriber>().SingleInstance();
-            builder.RegisterType<TradeSubscriber>().SingleInstance();
+            builder.RegisterType<RegistrationSubscriber>()
+                .WithParameter(TypedParameter.From(_settings.CurrentValue.AffiliateService.RabbitRegistration))
+                .As<IStartable>()
+                .As<IStopable>()
+                .AutoActivate()
+                .SingleInstance();
+            builder.RegisterType<LimitTradeSubscriber>()
+                .WithParameter(TypedParameter.From(_settings.CurrentValue.AffiliateService.RabbitMe))
+                .As<IStartable>()
+                .As<IStopable>()
+                .AutoActivate()
+                .SingleInstance();
+            builder.RegisterType<TradeSubscriber>()
+                .WithParameter(TypedParameter.From(_settings.CurrentValue.AffiliateService.RabbitMe))
+                .As<IStartable>()
+                .As<IStopable>()
+                .AutoActivate()
+                .SingleInstance();
         }
 
         private void RegisterProcessors(ContainerBuilder builder)

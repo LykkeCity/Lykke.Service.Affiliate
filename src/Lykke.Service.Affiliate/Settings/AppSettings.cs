@@ -1,16 +1,19 @@
-﻿using Lykke.Service.Affiliate.Settings.ServiceSettings;
-using Lykke.Service.Affiliate.Settings.SlackNotifications;
+﻿using JetBrains.Annotations;
+using Lykke.Sdk.Settings;
+using Lykke.Service.Affiliate.Settings.ServiceSettings;
+using Lykke.Service.Assets.Client;
 using Lykke.Service.ClientAccount.Client;
 using Lykke.Service.ExchangeOperations.Client;
 
 namespace Lykke.Service.Affiliate.Settings
 {
-    public class AppSettings
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+    public class AppSettings : BaseAppSettings
     {
         public AffiliateSettings AffiliateService { get; set; }
-        public SlackNotificationsSettings SlackNotifications { get; set; }
         public ClientAccountServiceClientSettings ClientAccountServiceClient { get; set; }
         public ExchangeOperationsServiceClientSettings ExchangeOperationsServiceClient { get; set; }
         public FeeSettings FeeSettings { get; set; }
+        public AssetServiceSettings AssetsServiceClient { get; set; }
     }
 }

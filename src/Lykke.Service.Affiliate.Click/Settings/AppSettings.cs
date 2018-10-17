@@ -1,11 +1,12 @@
-﻿using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
-using Lykke.Service.Affiliate.Click.Settings.SlackNotifications;
+﻿using JetBrains.Annotations;
+using Lykke.Sdk.Settings;
+using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 
 namespace Lykke.Service.Affiliate.Click.Settings
 {
-    public class AppSettings
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+    public class AppSettings : BaseAppSettings
     {
         public AffiliateClickSettings AffiliateClickService { get; set; }
-        public SlackNotificationsSettings SlackNotifications { get; set; }
     }
 }

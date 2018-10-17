@@ -11,5 +11,7 @@
         public AccrualPeriodSettings AccrualPeriodSettings { get; set; }
 
         public string AffiliateClickUrl { get; set; }
+        
+        public CqrsSettings Cqrs { get; set; }
     }
 }

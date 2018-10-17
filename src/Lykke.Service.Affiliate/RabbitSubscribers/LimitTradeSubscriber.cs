@@ -1,38 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using Common;
 using Common.Log;
+using Lykke.Common.Log;
 using Lykke.RabbitMqBroker;
 using Lykke.RabbitMqBroker.Subscriber;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Azure;
 using Lykke.Service.Affiliate.RabbitSubscribers.Contracts;
-using Lykke.Service.Affiliate.Settings;
 using Lykke.Service.Affiliate.Settings.ServiceSettings;
 
 namespace Lykke.Service.Affiliate.RabbitSubscribers
 {
-    public class LimitTradeSubscriber : IQueueSubscriber
+    public class LimitTradeSubscriber : IStartable, IStopable
     {
         private readonly ILog _log;
 
         private readonly RabbitMeSettings _rabbitConfig;
         private RabbitMqSubscriber<LimitQueueItem> _subscriber;
         private readonly IPaidFeeQueueWriter _paidFeeQueueWriter;
+        private readonly ILogFactory _logFactory;
 
         public LimitTradeSubscriber(
             RabbitMeSettings config,
-            ILog log, IPaidFeeQueueWriter paidFeeQueueWriter)
+            ILogFactory logFactory, IPaidFeeQueueWriter paidFeeQueueWriter)
         {
             _rabbitConfig = config;
-            _log = log;
+            _logFactory = logFactory;
+            _log = logFactory.CreateLog(this);
             _paidFeeQueueWriter = paidFeeQueueWriter;
         }
 
         public void Start()
         {
-            var settings = RabbitMqSubscriptionSettings.CreateForSubscriber(
+            var settings = RabbitMqSubscriptionSettings.ForSubscriber(
                 _rabbitConfig.ConnectionString,
                 _rabbitConfig.ExchangeLimit,
                 _rabbitConfig.QueueLimit);
@@ -41,17 +42,17 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
 
             try
             {
-                _subscriber = new RabbitMqSubscriber<LimitQueueItem>(settings, new DeadQueueErrorHandlingStrategy(_log, settings))
+                _subscriber = new RabbitMqSubscriber<LimitQueueItem>(_logFactory, settings, 
+                        new DeadQueueErrorHandlingStrategy(_logFactory, settings))
                     .SetMessageDeserializer(new JsonMessageDeserializer<LimitQueueItem>())
                     .SetMessageReadStrategy(new MessageReadQueueStrategy())
                     .Subscribe(ProcessMessage)
                     .CreateDefaultBinding()
-                    .SetLogger(_log)
                     .Start();
             }
             catch (Exception ex)
             {
-                _log.WriteErrorAsync(nameof(LimitTradeSubscriber), nameof(Start), null, ex).Wait();
+                _log.Error(nameof(Start), ex);
                 throw;
             }
         }
@@ -80,7 +81,7 @@ namespace Lykke.Service.Affiliate.RabbitSubscribers
                             }
                             catch (Exception e)
                             {
-                                await _log.WriteErrorAsync(nameof(TradeSubscriber), nameof(ProcessMessage), item.Transfer.ToJson(), e);
+                                _log.Error(nameof(ProcessMessage), e, item.Transfer.ToJson());
                             }
                         }
                     }
