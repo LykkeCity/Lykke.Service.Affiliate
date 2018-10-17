@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Common.Log;
 using Lykke.Sdk;
+using Lykke.Service.Affiliate.Click.Settings;
 using Lykke.Service.Affiliate.Click.Settings.ServiceSettings;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.MongoRepositories.Mongo;
@@ -13,16 +14,16 @@ namespace Lykke.Service.Affiliate.Click.Modules
 {
     public class ServiceModule : Module
     {
-        private readonly IReloadingManager<AffiliateClickSettings> _settings;
+        private readonly IReloadingManager<AppSettings> _settings;
 
-        public ServiceModule(IReloadingManager<AffiliateClickSettings> settings)
+        public ServiceModule(IReloadingManager<AppSettings> settings)
         {
             _settings = settings;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(_settings.CurrentValue.RedirectIpCacheSetting);
+            builder.RegisterInstance(_settings.CurrentValue.AffiliateClickService.RedirectIpCacheSetting);
 
             builder.RegisterType<StartupManager>()
                 .As<IStartupManager>();
@@ -35,7 +36,7 @@ namespace Lykke.Service.Affiliate.Click.Modules
 
         private void BuildRepositories(ContainerBuilder builder)
         {
-            var mongoClient = new MongoClient(_settings.ConnectionString(x => x.Db.MongoConnString).CurrentValue);
+            var mongoClient = new MongoClient(_settings.ConnectionString(x => x.AffiliateClickService.Db.MongoConnString).CurrentValue);
             
             builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links"))).As<ILinkRepository>();
 
