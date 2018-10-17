@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
 using Common.Log;
 using Lykke.Common.Log;
 using Lykke.Service.Affiliate.Core.Domain.Repositories.Mongo;
 using Lykke.Service.Affiliate.Core.Services.Processors;
+using Lykke.Service.Assets.Client.ReadModels;
 using Lykke.Service.ExchangeOperations.Client;
 
 namespace Lykke.Service.Affiliate.Services.Processors
@@ -15,14 +17,22 @@ namespace Lykke.Service.Affiliate.Services.Processors
         private readonly IClientAccrualRepository _clientAccrualRepository;
         private readonly IBonusAccrualRepository _bonusAccrualRepository;
         private readonly IExchangeOperationsServiceClient _exchangeOperationsServiceClient;
+        private readonly IAssetsReadModelRepository _assetsService;
         private readonly ILog _log;
 
-        public AccrualPeriodProcesor(string feeClientId, IClientAccrualRepository clientAccrualRepository, IBonusAccrualRepository bonusAccrualRepository, IExchangeOperationsServiceClient exchangeOperationsServiceClient, ILogFactory logFactory)
+        public AccrualPeriodProcesor(
+            string feeClientId, 
+            IClientAccrualRepository clientAccrualRepository, 
+            IBonusAccrualRepository bonusAccrualRepository, 
+            IExchangeOperationsServiceClient exchangeOperationsServiceClient,
+            IAssetsReadModelRepository assetsService,
+            ILogFactory logFactory)
         {
             _feeClientId = feeClientId;
             _clientAccrualRepository = clientAccrualRepository;
             _bonusAccrualRepository = bonusAccrualRepository;
             _exchangeOperationsServiceClient = exchangeOperationsServiceClient;
+            _assetsService = assetsService;
             _log = logFactory.CreateLog(this);
         }
 
@@ -56,6 +66,13 @@ namespace Lykke.Service.Affiliate.Services.Processors
 
         private async Task ProcessMeTransfer(string id, string clientId, string assetId, decimal amount)
         {
+            var asset = _assetsService.TryGet(assetId);
+
+            if (asset != null)
+            {
+                amount = amount.TruncateDecimalPlaces(asset.Accuracy);
+            }
+            
             var result = await _exchangeOperationsServiceClient.TransferAsync(clientId, _feeClientId, (double)amount, assetId, transactionId: id);
 
             if (result.IsOk())
@@ -67,7 +84,7 @@ namespace Lykke.Service.Affiliate.Services.Processors
                 return;
             }
 
-            throw new Exception($"Failed to process ME trasfer, ME id: {id}, client : {clientId}, code: {result?.Code}, msg: {result?.Message}");
+            throw new Exception($"Failed to process ME transfer, ME id: {id}, client : {clientId}, code: {result?.Code}, msg: {result?.Message}");
         }
     }
 }

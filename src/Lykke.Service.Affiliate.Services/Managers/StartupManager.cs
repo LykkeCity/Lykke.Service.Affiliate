@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Log;
+using Lykke.Cqrs;
 using Lykke.JobTriggers.Triggers;
 using Lykke.Sdk;
 using Lykke.Service.Affiliate.Core;
@@ -24,13 +25,15 @@ namespace Lykke.Service.Affiliate.Services.Managers
         private readonly IReferralService _referralService;
         private readonly IDisabledAssetRepository _disabledAssetRepository;
         private readonly TriggerHost _triggerHost;
+        private readonly ICqrsEngine _cqrsEngine;
 
         public StartupManager(
             ILogFactory logFactory, 
             IMemoryCache memoryCache, 
             IReferralService referralService, 
             IDisabledAssetRepository disabledAssetRepository,
-            TriggerHost triggerHost
+            TriggerHost triggerHost,
+            ICqrsEngine cqrsEngine
             )
         {
             _log = logFactory.CreateLog(this);
@@ -38,6 +41,7 @@ namespace Lykke.Service.Affiliate.Services.Managers
             _referralService = referralService;
             _disabledAssetRepository = disabledAssetRepository;
             _triggerHost = triggerHost;
+            _cqrsEngine = cqrsEngine;
         }
 
         public async Task StartAsync()
@@ -57,7 +61,9 @@ namespace Lykke.Service.Affiliate.Services.Managers
             }
 
             await _triggerHost.Start();
-
+            
+            _cqrsEngine.Start();
+            
             await Task.CompletedTask;
         }
     }

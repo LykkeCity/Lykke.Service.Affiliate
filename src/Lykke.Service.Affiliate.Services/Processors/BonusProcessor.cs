@@ -63,7 +63,6 @@ namespace Lykke.Service.Affiliate.Services.Processors
 
             do
             {
-
                 _log.Info(nameof(ProcessOneUser), "start processing period", $"AffiliateId: {affiliateId}, period: {period.Id}");
 
                 await _periodProcessor.Process(period);

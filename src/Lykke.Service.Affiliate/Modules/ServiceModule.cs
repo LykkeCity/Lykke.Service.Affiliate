@@ -18,6 +18,7 @@ using Lykke.Service.Affiliate.Services;
 using Lykke.Service.Affiliate.Services.Managers;
 using Lykke.Service.Affiliate.Services.Processors;
 using Lykke.Service.Affiliate.Settings;
+using Lykke.Service.Assets.Client;
 using Lykke.Service.ClientAccount.Client;
 using Lykke.Service.ExchangeOperations.Client;
 using Lykke.SettingsReader;
@@ -70,7 +71,11 @@ namespace Lykke.Service.Affiliate.Modules
 
             builder.RegisterLykkeServiceClient(settings.ClientAccountServiceClient.ServiceUrl);
 
-            builder.RegisterInstance(new ExchangeOperationsServiceClient(settings.ExchangeOperationsServiceClient.ServiceUrl)).As<IExchangeOperationsServiceClient>().SingleInstance();
+            builder.RegisterInstance(new ExchangeOperationsServiceClient(settings.ExchangeOperationsServiceClient.ServiceUrl))
+                .As<IExchangeOperationsServiceClient>()
+                .SingleInstance();
+            
+            builder.RegisterAssetsClient(_settings.CurrentValue.AssetsServiceClient);
         }
 
         private void RegisterRabbitMqSubscribers(ContainerBuilder builder)

@@ -8,9 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lykke.Common" Version="7.1.0" />
+    <PackageReference Include="Lykke.Common" Version="7.2.0" />
+    <PackageReference Include="Lykke.Cqrs" Version="7.0.0" />
     <PackageReference Include="Lykke.JobTriggers" Version="2.2.0" />
     <PackageReference Include="Lykke.Sdk" Version="5.3.1" />
+    <PackageReference Include="Lykke.Service.Assets.Client" Version="5.1.0" />
     <PackageReference Include="Lykke.Service.ClientAccount.Client" Version="2.2.3" />
     <PackageReference Include="Lykke.Service.ExchangeOperations.Client" Version="1.2.2" />
   </ItemGroup>
