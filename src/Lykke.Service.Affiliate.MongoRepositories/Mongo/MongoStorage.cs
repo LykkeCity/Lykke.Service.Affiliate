@@ -12,10 +12,16 @@ namespace Lykke.Service.Affiliate.MongoRepositories.Mongo
 {
     public class MongoStorage<T> : IMongoStorage<T> where T : MongoEntity
     {
+        private const string DefaultDbName = "maindb";
         private readonly IMongoCollection<T> _collection;
 
-        public MongoStorage(IMongoClient mongoClient, string tableName, string dbName = "maindb")
+        public MongoStorage(IMongoClient mongoClient, string tableName, string dbName = DefaultDbName)
         {
+            if (string.IsNullOrWhiteSpace(dbName))
+            {
+                dbName = DefaultDbName;
+            }
+
             var db = mongoClient.GetDatabase(dbName);
             _collection = db.GetCollection<T>(tableName);
         }

@@ -53,11 +53,13 @@ namespace Lykke.Service.Affiliate.Click.Modules
 
         private void BuildRepositories(ContainerBuilder builder)
         {
-            var mongoClient = new MongoClient(_settings.ConnectionString(x => x.Db.MongoConnString).CurrentValue);
-            
-            builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links"))).As<ILinkRepository>();
+            var connectionString = _settings.ConnectionString(x => x.Db.MongoConnString).CurrentValue;
+            var mongoClient = new MongoClient(connectionString);
+            var databaseName = MongoUrl.Create(connectionString).DatabaseName;
 
-            builder.RegisterInstance(new LinkRedirectRepository(new MongoStorage<LinkRedirectEntity>(mongoClient, "LinkRedirects"))).As<ILinkRedirectRepository>();
+            builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links", databaseName))).As<ILinkRepository>();
+
+            builder.RegisterInstance(new LinkRedirectRepository(new MongoStorage<LinkRedirectEntity>(mongoClient, "LinkRedirects", databaseName))).As<ILinkRedirectRepository>();
         }
     }
 }
