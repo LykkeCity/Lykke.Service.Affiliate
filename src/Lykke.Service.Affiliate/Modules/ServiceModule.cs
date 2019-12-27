@@ -102,23 +102,25 @@ namespace Lykke.Service.Affiliate.Modules
 
         private void BuildRepositories(ContainerBuilder builder)
         {
-            var mongoClient = new MongoClient(_settings.ConnectionString(x => x.AffiliateService.Db.MongoConnString).CurrentValue);
+            var connectionString = _settings.ConnectionString(x => x.AffiliateService.Db.MongoConnString).CurrentValue;
+            var mongoClient = new MongoClient(connectionString);
+            var databaseName = MongoUrl.Create(connectionString).DatabaseName;
 
-            builder.RegisterInstance(new ReferralRepository(new MongoStorage<Referral>(mongoClient, "Referrals"))).As<IReferralRepository>();
+            builder.RegisterInstance(new ReferralRepository(new MongoStorage<Referral>(mongoClient, "Referrals", databaseName))).As<IReferralRepository>();
 
-            builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links"))).As<ILinkRepository>();
+            builder.RegisterInstance(new LinkRepository(new MongoStorage<LinkEntity>(mongoClient, "Links", databaseName))).As<ILinkRepository>();
 
-            builder.RegisterInstance(new LinkRedirectRepository(new MongoStorage<LinkRedirectEntity>(mongoClient, "LinkRedirects"))).As<ILinkRedirectRepository>();
+            builder.RegisterInstance(new LinkRedirectRepository(new MongoStorage<LinkRedirectEntity>(mongoClient, "LinkRedirects", databaseName))).As<ILinkRedirectRepository>();
 
-            builder.RegisterInstance(new PaidFeeRepository(new MongoStorage<PaidFeeEntity>(mongoClient, "PaidFees"))).As<IPaidFeeRepository>();
+            builder.RegisterInstance(new PaidFeeRepository(new MongoStorage<PaidFeeEntity>(mongoClient, "PaidFees", databaseName))).As<IPaidFeeRepository>();
 
-            builder.RegisterInstance(new BonusAccrualRepository(new MongoStorage<BonusAccrualEntity>(mongoClient, "BonusAccruals"))).As<IBonusAccrualRepository>();
+            builder.RegisterInstance(new BonusAccrualRepository(new MongoStorage<BonusAccrualEntity>(mongoClient, "BonusAccruals", databaseName))).As<IBonusAccrualRepository>();
 
-            builder.RegisterInstance(new ClientAccrualRepository(new MongoStorage<ClientAccrualEntity>(mongoClient, "ClientAccruals"))).As<IClientAccrualRepository>();
+            builder.RegisterInstance(new ClientAccrualRepository(new MongoStorage<ClientAccrualEntity>(mongoClient, "ClientAccruals", databaseName))).As<IClientAccrualRepository>();
 
-            builder.RegisterInstance(new AccrualPeriodRepository(new MongoStorage<AccrualPeriodEntity>(mongoClient, "AccrualPeriods"))).As<IAccrualPeriodRepository>();
+            builder.RegisterInstance(new AccrualPeriodRepository(new MongoStorage<AccrualPeriodEntity>(mongoClient, "AccrualPeriods", databaseName))).As<IAccrualPeriodRepository>();
 
-            builder.RegisterInstance(new DisabledAssetRepository(new MongoStorage<DisabledAssetEntity>(mongoClient, "DisabledAssets"))).As<IDisabledAssetRepository>();
+            builder.RegisterInstance(new DisabledAssetRepository(new MongoStorage<DisabledAssetEntity>(mongoClient, "DisabledAssets", databaseName))).As<IDisabledAssetRepository>();
         }
 
         private void BindQueue(ContainerBuilder builder)
